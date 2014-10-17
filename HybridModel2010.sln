@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HybridModel", "app\HybridModel\HybridModel.vcxproj", "{777F95D9-D530-4360-A382-C24C95D66FF7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Detour", "thirdparty\Detour\Detour\Detour.vcxproj", "{1DC27DD3-00EE-4B3E-A378-1B8FA1C5CE3C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Recast", "thirdparty\Recast\Recast.vcxproj", "{05A67946-DF50-4552-9245-B8A7D4FE28E9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DetourTileCache", "thirdparty\Detour\DetourTileCache\DetourTileCache.vcxproj", "{6E43A82D-321A-436C-B88B-5E377BFE1632}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DebugUtils", "thirdparty\Detour\DebugUtils\DebugUtils.vcxproj", "{7EF44C6C-36A6-4745-9EE8-7D9F4F43E438}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HybridFrameworkDLL", "app\HybridFrameworkDLL\HybridFrameworkDLL.vcxproj", "{072FD381-2ECF-45D2-9A8C-35332488879D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{777F95D9-D530-4360-A382-C24C95D66FF7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{777F95D9-D530-4360-A382-C24C95D66FF7}.Debug|Win32.Build.0 = Debug|Win32
+		{777F95D9-D530-4360-A382-C24C95D66FF7}.Release|Win32.ActiveCfg = Release|Win32
+		{777F95D9-D530-4360-A382-C24C95D66FF7}.Release|Win32.Build.0 = Release|Win32
+		{1DC27DD3-00EE-4B3E-A378-1B8FA1C5CE3C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1DC27DD3-00EE-4B3E-A378-1B8FA1C5CE3C}.Debug|Win32.Build.0 = Debug|Win32
+		{1DC27DD3-00EE-4B3E-A378-1B8FA1C5CE3C}.Release|Win32.ActiveCfg = Release|Win32
+		{1DC27DD3-00EE-4B3E-A378-1B8FA1C5CE3C}.Release|Win32.Build.0 = Release|Win32
+		{05A67946-DF50-4552-9245-B8A7D4FE28E9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{05A67946-DF50-4552-9245-B8A7D4FE28E9}.Debug|Win32.Build.0 = Debug|Win32
+		{05A67946-DF50-4552-9245-B8A7D4FE28E9}.Release|Win32.ActiveCfg = Release|Win32
+		{05A67946-DF50-4552-9245-B8A7D4FE28E9}.Release|Win32.Build.0 = Release|Win32
+		{6E43A82D-321A-436C-B88B-5E377BFE1632}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E43A82D-321A-436C-B88B-5E377BFE1632}.Debug|Win32.Build.0 = Debug|Win32
+		{6E43A82D-321A-436C-B88B-5E377BFE1632}.Release|Win32.ActiveCfg = Release|Win32
+		{6E43A82D-321A-436C-B88B-5E377BFE1632}.Release|Win32.Build.0 = Release|Win32
+		{7EF44C6C-36A6-4745-9EE8-7D9F4F43E438}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7EF44C6C-36A6-4745-9EE8-7D9F4F43E438}.Debug|Win32.Build.0 = Debug|Win32
+		{7EF44C6C-36A6-4745-9EE8-7D9F4F43E438}.Release|Win32.ActiveCfg = Release|Win32
+		{7EF44C6C-36A6-4745-9EE8-7D9F4F43E438}.Release|Win32.Build.0 = Release|Win32
+		{072FD381-2ECF-45D2-9A8C-35332488879D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{072FD381-2ECF-45D2-9A8C-35332488879D}.Debug|Win32.Build.0 = Debug|Win32
+		{072FD381-2ECF-45D2-9A8C-35332488879D}.Release|Win32.ActiveCfg = Release|Win32
+		{072FD381-2ECF-45D2-9A8C-35332488879D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

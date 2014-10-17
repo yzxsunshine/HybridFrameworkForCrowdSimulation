@@ -1,0 +1,325 @@
+#include "AStarSearch.h"
+#include "CommonDef.h"
+OpenQueue::OpenQueue(int initSize)
+{
+	heap.reserve(initSize);
+}
+
+OpenQueue::~OpenQueue()
+{
+	for(int i=0; i<heap.size(); i++)
+	{
+		delete heap[i];
+		heap[i] = NULL;
+	}
+	heap.clear();
+}
+
+void OpenQueue::PreAllocateMemory(int extendSize)
+{
+	int prevSize = heap.capacity();
+	heap.reserve(prevSize + extendSize);
+}
+
+bool OpenQueue::IsQueueEmpty()
+{
+	return (heap.empty());
+}
+
+AStarMPNode* OpenQueue::PopQueue()
+{
+	AStarMPNode* node = heap.front();
+	std::pop_heap(heap.begin(), heap.end(), NodeHCostGreater());
+	heap.pop_back();
+	return node;
+}
+
+void OpenQueue::PushQueue(AStarMPNode* node)
+{
+	heap.push_back(node);
+	std::push_heap(heap.begin(), heap.end(), NodeHCostGreater());
+}
+
+void OpenQueue::UpdateQueue(AStarMPNode* node)
+{
+	std::vector<AStarMPNode*>::iterator iter;
+	for(iter = heap.begin(); iter!=heap.end(); iter++)
+	{
+		if((*iter)->m_mpID == node->m_mpID)
+		{
+			std::push_heap(heap.begin(), iter+1, NodeHCostGreater());	
+			return;
+		}
+	}
+}
+
+AStarMPNode*& OpenQueue::GetNodeAt(int id)
+{
+	return heap[id];
+}
+
+void AStarMPNode::AStarSearch(NavMeshFace& startFace, NavMeshFace& endFace
+			   , vcg::Point3f startPt, vcg::Point3f endPt, std::vector<MidPoint>& m_midPointList
+			   , std::vector<int>& path, std::vector<vcg::Point3f>& wayPoints)
+{
+	//std::vector<int> path;	// store faces lie on the path
+	//std::vector<vcg::Point3f> wayPoints;	// store middle points lie on the path
+	int N = m_midPointList.size();
+	OpenQueue open;
+	for(int i = 0; i < 3; i++)
+	{
+		AStarMPNode* node = new AStarMPNode();
+		node->m_mpID = startFace.midPointIds[i];
+		if(node->m_mpID < 0)
+		{
+			delete node;
+			continue;
+		}
+		node->cost = (startPt - m_midPointList[node->m_mpID].position).Norm();
+		m_midPointList[node->m_mpID].openID = i;
+		open.PushQueue(node);
+	}
+	int flag = 2;
+	while(!open.IsQueueEmpty())
+	{
+		AStarMPNode* curNode = open.PopQueue();
+		if(m_midPointList[curNode->m_mpID].faceIds[0] == endFace.faceID
+		|| m_midPointList[curNode->m_mpID].faceIds[1] == endFace.faceID)
+		{
+			wayPoints.push_back(endPt);
+			path.push_back(endFace.faceID);
+			AStarMPNode* L = curNode;
+			while(L != NULL)
+			{
+				wayPoints.push_back(m_midPointList[L->m_mpID].position);
+				printf("point id: %d\n", L->m_mpID);
+				if(L->m_parentNode != NULL)
+				{
+					for(int i=0; i<2; i++)
+						for(int j=0; j<2; j++)
+						{
+							if(m_midPointList[L->m_mpID].faceIds[i] == m_midPointList[L->m_parentNode->m_mpID].faceIds[j])
+							{
+								path.push_back(m_midPointList[L->m_mpID].faceIds[i]);
+							}
+						}
+				}
+				L = L->m_parentNode;
+			}
+			path.push_back(startFace.faceID);
+			wayPoints.push_back(startPt);
+			std::reverse(path.begin(), path.end());
+			std::reverse(wayPoints.begin(), wayPoints.end());
+			break;
+		}
+		int neighborNum = 4;
+		if(m_midPointList[curNode->m_mpID].isBorder)
+		{
+			neighborNum = 2;
+		}
+		for(int j = 0; j < neighborNum; j++)
+		{
+			int nid = m_midPointList[curNode->m_mpID].neighbor[j];
+			if(m_midPointList[nid].isClose)
+			{
+				continue;
+			}
+			float gCost = curNode->cost + m_midPointList[curNode->m_mpID].cost[j];
+			float hCost = gCost + (endPt - m_midPointList[nid].position).Norm();
+			if(m_midPointList[nid].openID >= 0)
+			{
+				if(m_midPointList[nid].openID < open.GetHeapSize() && open.GetNodeAt(m_midPointList[nid].openID)->hcost > hCost)
+				{
+					open.GetNodeAt(m_midPointList[nid].openID)->m_parentNode = curNode;
+					open.GetNodeAt(m_midPointList[nid].openID)->cost = gCost;
+					open.GetNodeAt(m_midPointList[nid].openID)->hcost = hCost;
+					open.UpdateQueue(open.GetNodeAt(m_midPointList[nid].openID));
+				}
+				continue;
+			}
+			curNode->m_childNodes[j] = new AStarMPNode();
+			curNode->m_childNodes[j]->m_parentNode = curNode;
+			curNode->m_childNodes[j]->m_mpID = nid;
+			curNode->m_childNodes[j]->cost = gCost;
+			curNode->m_childNodes[j]->hcost = hCost;
+			open.PushQueue(curNode->m_childNodes[j]);
+		}
+		m_midPointList[curNode->m_mpID].isClose = true;
+		// 要加二叉堆，把open改成链表形式，每次把open删掉顶点
+		for(int i=0; i<flag; i++)
+		{
+			m_midPointList[open.GetNodeAt(i)->m_mpID].openID = i;
+		}
+	}
+}
+
+std::vector<vcg::Point3f> AStarMPNode::AStarPathSmooth(NavMesh& navMesh, std::vector<int>& path, std::vector<vcg::Point3f>& wayPoints)
+{
+	std::vector<vcg::Point3f> smoothedPath;
+	int wayPtNum = wayPoints.size();
+	smoothedPath.reserve(wayPtNum);
+//	vcg::Point3f startPt = wayPoints[0];
+//	vcg::Point3f endPt = wayPoints[wayPtNum-1];
+	bool foundEndPt = false;
+	int startId = 0;
+	smoothedPath.push_back(wayPoints[0]);
+	while(!foundEndPt)
+	{
+		for(int i=startId + 1; i<wayPtNum; i++)	// traverse middle points to extend line of sight
+		{
+			vcg::Point2f startPt, endPt;
+			startPt.X() = wayPoints[startId].X();
+			startPt.Y() = wayPoints[startId].Z();
+			for(int j=startId + 1; j<i; j++)	// traverse face lie on current line of sight
+			{
+				int sideCount = 0;
+				bool isIntersect = false;
+				for(int k=0; k<3; k++)
+				{
+					int ptAId = k;
+					int ptBId = (k+1)%3;
+					vcg::Point2f ptA, ptB;
+					ptA.X() = navMesh.face[path[j]].V(ptAId)->P().X();
+					ptA.Y() = navMesh.face[path[j]].V(ptAId)->P().Z();
+					ptB.X() = navMesh.face[path[j]].V(ptBId)->P().X();
+					ptB.Y() = navMesh.face[path[j]].V(ptBId)->P().Z();
+					endPt.X() = wayPoints[i].X();
+					endPt.Y() = wayPoints[i].Z();
+					
+					if(GetPointSide(ptA, ptB, endPt) != RIGHT_SIDE) // not on the right side 
+					{
+						if(GetPointSide(ptA, ptB, startPt) != LEFT_SIDE) // not on the left side 
+						{
+							vcg::Point2f intersectPt;
+							int status = GetIntersection(startPt, endPt, ptA, ptB, &intersectPt);
+							if(status == SEGMENTS_INTERSECT || status == A_BISECTS_B)
+							{
+								isIntersect = true;
+								break;	// current way point have inter section with the face, continue to next face
+							}
+						}
+					}
+					else
+					{
+						sideCount++;	// on the right side of edge
+					}
+				}
+				//if(sideCount == 3)
+				//{
+					if(i==wayPtNum-1)
+					{
+						foundEndPt = true;
+						smoothedPath.push_back(wayPoints[i]);
+						break;
+					}
+					
+					// end point is in the face, finish this way point, may add a further one, if the current point is the final goal, finish
+				//}
+				else if(isIntersect)
+				{
+					continue;
+				}
+				else
+				{
+					smoothedPath.push_back(wayPoints[i-1]);	//put the last one into way points
+					startId = i;
+					// no relationship, should take the last point as the end of line, this point should be a new start point
+				}
+			}
+		}
+	}
+	return smoothedPath;
+}
+
+int AStarMPNode::GetPointSide(vcg::Point2f ptA, vcg::Point2f ptB, vcg::Point2f wayPt)
+{
+	vcg::Point2f normal = ptB - ptA;
+	normal.Normalize();
+	float oldVal = normal.Y();
+	normal.Y() = -normal.X();
+	normal.X() = oldVal;
+
+	vcg::Point2f testVec = wayPt - ptA;
+	float dotVal = testVec.dot(normal);
+	if(dotVal > EPSILON)	// right
+	{
+		return RIGHT_SIDE;		
+	}
+	else if(dotVal < -EPSILON)	// left
+	{
+		return LEFT_SIDE;			
+	}
+	else
+	{
+		return ON_LINE;
+	}
+}
+
+int AStarMPNode::GetIntersection(vcg::Point2f startPt, vcg::Point2f endPt
+							   , vcg::Point2f lineA, vcg::Point2f lineB, vcg::Point2f* intersectPt)
+{
+	float Ay_minus_Cy = startPt.Y() - lineA.Y();	
+	float Dx_minus_Cx = lineB.X() - lineA.X();	
+	float Ax_minus_Cx = startPt.X() - lineA.X();	
+	float Dy_minus_Cy = lineB.Y() - lineA.Y();	
+	float Bx_minus_Ax = endPt.X() - startPt.X();	
+	float By_minus_Ay = endPt.Y() - startPt.Y();	
+	float Numerator = (Ay_minus_Cy * Dx_minus_Cx) - (Ax_minus_Cx * Dy_minus_Cy);
+	float Denominator = (Bx_minus_Ax * Dy_minus_Cy) - (By_minus_Ay * Dx_minus_Cx);
+	// if lines do not intersect, return now
+	if (!Denominator)
+	{
+		if (!Numerator)
+		{
+			return COLLINEAR;
+		}
+		return PARALELL;
+	}
+	float FactorAB = Numerator / Denominator;
+	float FactorCD = ((Ay_minus_Cy * Bx_minus_Ax) - (Ax_minus_Cx * By_minus_Ay)) / Denominator;
+	// if an interection point was provided, fill it in now
+	if (intersectPt)
+	{
+		intersectPt->X() = (startPt.X() + (FactorAB * Bx_minus_Ax));
+		intersectPt->Y() = (startPt.Y() + (FactorAB * By_minus_Ay));
+	}
+
+
+	// now determine the type of intersection
+	if ((FactorAB >= 0.0f) && (FactorAB <= 1.0f) && (FactorCD >= 0.0f) && (FactorCD <= 1.0f))
+	{
+		return SEGMENTS_INTERSECT;
+	}
+	else if ((FactorCD >= 0.0f) && (FactorCD <= 1.0f))
+	{
+		return (A_BISECTS_B);
+	}
+	else if ((FactorAB >= 0.0f) && (FactorAB <= 1.0f))
+	{
+		return (B_BISECTS_A);
+	}
+	return LINES_INTERSECT;
+}
+
+/*void AStarMPNode::print(AStarMPNode* Node, std::vector<MidPoint>& m_midPointList)
+{
+	AStarMPNode* L = Node;
+	if(Node != NULL)
+	{
+		L = Node->m_parentNode;
+		print(L, m_midPointList);
+		if(Node->m_parentNode != NULL)
+		{
+			for(int i=0; i<2; i++)
+				for(int j=0; j<2; j++)
+				{
+					if(m_midPointList[Node->m_mpID].faceIds[i] == m_midPointList[Node->m_parentNode->m_mpID].faceIds[j])
+					{
+						printf("%d\n",m_midPointList[Node->m_mpID].faceIds[i]);
+					}
+				}
+		}
+	}
+	
+}
+*/

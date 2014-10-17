@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="HybridAlgorithm">
+      <UniqueIdentifier>{7783d9b9-3ec0-476b-8a43-976679b4979e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HybridAlgorithm\RVO">
+      <UniqueIdentifier>{4f28ea7e-177e-4ad9-8e95-36d666feebaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{b1dbb92d-6974-4441-b95c-ae03b6103887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vcg">
+      <UniqueIdentifier>{e0b881a5-c823-4cd6-a631-c55591e31e92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HybridAlgorithm\Graphcut">
+      <UniqueIdentifier>{407fcb1e-f474-442e-8a0b-a178ae878d71}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="HybridAlgorithm\CrowdGroup.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\FluidSimulator.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\Grid.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\HmAgent.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\HybridModelCrowd.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\RVO\Agent.cpp">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\RVO\KdTree.cpp">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\RVO\Obstacle.cpp">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridAlgorithm\RVO\RVOSimulator.cpp">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\vcglib\wrap\ply\plylib.cpp">
+      <Filter>vcg</Filter>
+    </ClCompile>
+    <ClCompile Include="AStarSearch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChunkyTriMesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Filelist.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GLFont.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridCrowdTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridModel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="imguiRenderGL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InputGeom.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="InputMesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshLoaderObj.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MidPointCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NavCorridor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NavMesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NavMeshQuery.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OffMeshConnectionTool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleInterfaces.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SlideShow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TileCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ValueHistory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDef.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\GCoptimization.cpp">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\graph.cpp">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\LinkedBlockList.cpp">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\maxflow.cpp">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HybridAlgorithm\CrowdGroup.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\FluidSimulator.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\Grid.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\HmAgent.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\HybridModelCrowd.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\Rectangle.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\Vector2.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\RVO\Agent.h">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\RVO\Definitions.h">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\RVO\KdTree.h">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\RVO\Obstacle.h">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\RVO\RVOSimulator.h">
+      <Filter>HybridAlgorithm\RVO</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarSearch.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChunkyTriMesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Filelist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GLFont.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridCrowdTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridModel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="imguiRenderGL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InputGeom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InputMesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLoaderObj.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MidPointCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NavCorridor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NavMesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NavMeshQuery.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OffMeshConnectionTool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PerfTimer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sample.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleInterfaces.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SlideShow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TileCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueHistory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\block.h">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\energy.h">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\GCoptimization.h">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\graph.h">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\LinkedBlockList.h">
+      <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
