@@ -121,6 +121,7 @@
     <ClCompile Include="HybridAlgorithm\CrowdGroup.cpp" />
     <ClCompile Include="HybridAlgorithm\FluidSimulator.cpp" />
     <ClCompile Include="HybridAlgorithm\Grid.cpp" />
+    <ClCompile Include="HybridAlgorithm\Group.cpp" />
     <ClCompile Include="HybridAlgorithm\HmAgent.cpp" />
     <ClCompile Include="HybridAlgorithm\HybridModelCrowd.cpp" />
     <ClCompile Include="HybridAlgorithm\RVO\Agent.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="HybridAlgorithm\CrowdGroup.h" />
     <ClInclude Include="HybridAlgorithm\FluidSimulator.h" />
     <ClInclude Include="HybridAlgorithm\Grid.h" />
+    <ClInclude Include="HybridAlgorithm\Group.h" />
     <ClInclude Include="HybridAlgorithm\HmAgent.h" />
     <ClInclude Include="HybridAlgorithm\HybridModelCrowd.h" />
     <ClInclude Include="HybridAlgorithm\Rectangle.h" />

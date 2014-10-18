@@ -2,7 +2,7 @@
 #include "Vector2.h"
 #include "HmAgent.h"
 #include "CrowdGroup.h"
-#include "Grid.h"
+#include "Group.h"
 
 
 /*struct agent_grid {
@@ -16,7 +16,7 @@ class FluidSimulator
 public:
 	FluidSimulator(void);
 	~FluidSimulator(void);
-	void init(std::vector<Grid>* grids, HmAgent** agents, std::vector<CrowdGroup>* fluid);
+	void init(std::vector<Group>* groups, HmAgent** agents, std::vector<CrowdGroup>* fluid);
 	void doStep();
 
 	void setXLabelNum(int ln) { m_xLabelNum = ln; }
@@ -37,27 +37,27 @@ public:
 	float* getYLabels(void) { return m_yLabels; }
 	const float& getYLabel(int l) { return m_yLabels[l]; }
 	
-	std::vector<Grid>* getGrids(void) { return m_grids; }
-	Grid& getGrid(int gridID) { return (*m_grids)[gridID]; }
-	const Grid& getGridConst(int gridID) { return (*m_grids)[gridID]; }
+	std::vector<Group>* getGroups(void) { return m_groups; }
+	Group& getGroup(int gridID) { return (*m_groups)[gridID]; }
+	const Group& getGroupConst(int gridID) { return (*m_groups)[gridID]; }
 
-	std::vector<CrowdGroup>* getGroups(void) { return m_fluidGroups; }
-	CrowdGroup& getGroup(int groupID) { return (*m_fluidGroups)[groupID]; }
-	const CrowdGroup& getGroupConst(int groupID) { return (*m_fluidGroups)[groupID]; }
+	std::vector<CrowdGroup>* getCrowdGroups(void) { return m_fluidGroups; }
+	CrowdGroup& getCrowdGroups(int groupID) { return (*m_fluidGroups)[groupID]; }
+	const CrowdGroup& getCrowdGroup(int groupID) { return (*m_fluidGroups)[groupID]; }
 
 	int getMaxCost(void) {return m_maxCost;}
 	void setMaxCost(int cost) { m_maxCost = cost; }
 
 	int getCurGroupID(void) { return m_curGroup; }
 	//void rearrange();
-	Vector2 GetGridVelocity(int gridid);
-	void GetGridTraits(int gridid, float& pc1, float& pc2);
+	Vector2 GetGroupVelocity(int gridid);
+	void GetGroupTraits(int gridid, float& pc1, float& pc2);
 
 	void SetTraitCoeff(float alpha, float beta);
 	float GetAlpha() { return m_alpha; }
 	float GetBeta() { return m_beta; }
 protected:
-	std::vector<Grid>* m_grids;
+	std::vector<Group>* m_groups;
 	HmAgent** m_agents;
 	std::vector<CrowdGroup>* m_fluidGroups;
 	

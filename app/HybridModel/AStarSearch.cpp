@@ -378,7 +378,7 @@ void AStarGridNode::AStarSearch(int startGrid, int endGrid
 		int neighborNum = 4;
 		for(int j = 0; j < neighborNum; j++)
 		{
-			int nid = gridList[curNode->m_gridID].m_neighbor[j];
+			int nid = gridList[curNode->m_gridID].m_group.m_neighbor[j];
 			if(nid < 0)
 				continue;
 			if(gridList[nid].isClose)

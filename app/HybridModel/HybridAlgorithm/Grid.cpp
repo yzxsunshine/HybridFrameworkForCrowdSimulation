@@ -77,25 +77,25 @@ bool Grid::GetEdgePoint(vcg::Point3f startPt, vcg::Point3f endPt
 	vcg::Point2f intersect;
 	// box edges
 	vcg::Point2f edges[4][2];
-	edges[0][0].X() = m_box.x();	// up
-	edges[0][0].Y() = m_box.y();
-	edges[0][1].X() = m_box.x() + m_box.w();
-	edges[0][1].Y() = m_box.y();
+	edges[0][0].X() = m_group.m_box.x();	// up
+	edges[0][0].Y() = m_group.m_box.y();
+	edges[0][1].X() = m_group.m_box.x() + m_group.m_box.w();
+	edges[0][1].Y() = m_group.m_box.y();
 
-	edges[1][0].X() = m_box.x();	//down
-	edges[1][0].Y() = m_box.y() + m_box.h();
-	edges[1][1].X() = m_box.x() + m_box.w();
-	edges[1][1].Y() = m_box.y() + m_box.h();
+	edges[1][0].X() = m_group.m_box.x();	//down
+	edges[1][0].Y() = m_group.m_box.y() + m_group.m_box.h();
+	edges[1][1].X() = m_group.m_box.x() + m_group.m_box.w();
+	edges[1][1].Y() = m_group.m_box.y() + m_group.m_box.h();
 
-	edges[2][0].X() = m_box.x();	//left
-	edges[2][0].Y() = m_box.y();
-	edges[2][1].X() = m_box.x();
-	edges[2][1].Y() = m_box.y() + m_box.h();
+	edges[2][0].X() = m_group.m_box.x();	//left
+	edges[2][0].Y() = m_group.m_box.y();
+	edges[2][1].X() = m_group.m_box.x();
+	edges[2][1].Y() = m_group.m_box.y() + m_group.m_box.h();
 
-	edges[3][0].X() = m_box.x() + m_box.w();	//right
-	edges[3][0].Y() = m_box.y();
-	edges[3][1].X() = m_box.x() + m_box.w();
-	edges[3][1].Y() = m_box.y() + m_box.h();
+	edges[3][0].X() = m_group.m_box.x() + m_group.m_box.w();	//right
+	edges[3][0].Y() = m_group.m_box.y();
+	edges[3][1].X() = m_group.m_box.x() + m_group.m_box.w();
+	edges[3][1].Y() = m_group.m_box.y() + m_group.m_box.h();
 	
 	// entry
 	ptA.X() = startPt.X();
@@ -160,100 +160,4 @@ bool Grid::GetEdgePoint(vcg::Point3f startPt, vcg::Point3f endPt
 		return false;
 	}
 	return true;
-}
-
-void Grid::UpdateDensity(float threshold, float agentSize)
-{
-	formerDensity = nowDensity;
-	nowDensity = GetAgentNum() * agentSize / m_area;
-	if(nowDensity > threshold)
-	{
-		m_densityStatus = BLACK;
-	}
-	else if(nowDensity > 0)
-	{
-		m_densityStatus = GRAY;
-	}
-	else
-	{
-		m_densityStatus = WHITE;
-	}
-}
-
-bool Grid::GetInterpolationNeighbors(Vector2 pos, std::vector<Grid>* grids, std::vector<int>& nids
-									,Vector2& leftBottom, Vector2& rightTop)
-{
-	nids.clear();
-	if(pos.x() > m_box.center_x() && pos.y() > m_box.center_y())	// first quadrant
-	{
-		int cornerGridID;
-		if(m_neighbor[1] >= 0)
-			cornerGridID = (*grids)[m_neighbor[1]].m_neighbor[3];
-		else if(m_neighbor[3] >= 0)
-			cornerGridID = (*grids)[m_neighbor[3]].m_neighbor[1];
-		else
-			return false;
-		nids.push_back(gridID);
-		nids.push_back(m_neighbor[3]);
-		nids.push_back(cornerGridID);
-		nids.push_back(m_neighbor[1]);
-		leftBottom.SetX(m_box.center_x());
-		leftBottom.SetY(m_box.center_y());
-		rightTop.SetX(m_box.center_x() + m_box.w());
-		rightTop.SetY(m_box.center_y() + m_box.h());
-	}
-	else if(pos.x() > m_box.center_x() && pos.y() < m_box.center_y())	// second quadrant
-	{
-		int cornerGridID;
-		if(m_neighbor[0] >= 0)
-			cornerGridID = (*grids)[m_neighbor[0]].m_neighbor[3];
-		else if(m_neighbor[3] >= 0)
-			cornerGridID = (*grids)[m_neighbor[3]].m_neighbor[0];
-		else
-			return false;
-		nids.push_back(m_neighbor[0]);
-		nids.push_back(cornerGridID);
-		nids.push_back(m_neighbor[3]);
-		nids.push_back(gridID);
-		leftBottom.SetX(m_box.center_x());
-		leftBottom.SetY(m_box.center_y() - m_box.h());
-		rightTop.SetX(m_box.center_x() + m_box.w());
-		rightTop.SetY(m_box.center_y());
-	}
-	else if(pos.x() < m_box.center_x() && pos.y() < m_box.center_y())	// first quadrant
-	{
-		int cornerGridID;
-		if(m_neighbor[0] >= 0)
-			cornerGridID = (*grids)[m_neighbor[0]].m_neighbor[2];
-		else if(m_neighbor[2] >= 0)
-			cornerGridID = (*grids)[m_neighbor[2]].m_neighbor[0];
-		else
-			return false;
-		nids.push_back(cornerGridID);
-		nids.push_back(m_neighbor[0]);
-		nids.push_back(gridID);
-		nids.push_back(m_neighbor[2]);
-		leftBottom.SetX(m_box.center_x() - m_box.w());
-		leftBottom.SetY(m_box.center_y() - m_box.h());
-		rightTop.SetX(m_box.center_x());
-		rightTop.SetY(m_box.center_y());
-	}
-	else
-	{
-		int cornerGridID;
-		if(m_neighbor[1] >= 0)
-			cornerGridID = (*grids)[m_neighbor[1]].m_neighbor[2];
-		else if(m_neighbor[2] >= 0)
-			cornerGridID = (*grids)[m_neighbor[2]].m_neighbor[1];
-		else 
-			return false;
-		nids.push_back(m_neighbor[2]);
-		nids.push_back(gridID);
-		nids.push_back(m_neighbor[1]);		
-		nids.push_back(cornerGridID);
-		leftBottom.SetX(m_box.center_x() - m_box.w());
-		leftBottom.SetY(m_box.center_y());
-		rightTop.SetX(m_box.center_x());
-		rightTop.SetY(m_box.center_y() + m_box.h());
-	}
 }

@@ -14,7 +14,7 @@ void CrowdGroup::AddGrid(int gridId)
 {
 	if(gridId >= 0)
 	{
-		crowdGrid.push_back(gridId);
+		crowdGroup.push_back(gridId);
 	}
 }
 
@@ -33,26 +33,26 @@ int compareHorizontal(const elem_grid& a, const elem_grid& b)
 #define  Q(x) ((x)*(x))   
 #define  D(arr,a,b) (Q(arr[a].x()-arr[b].x())+Q(arr[a].y()-arr[b].y()))
 
-void CrowdGroup::TrackContour(std::vector<Grid>* grids, HmAgent** agents)
+void CrowdGroup::TrackContour(std::vector<Group>* groups, HmAgent** agents)
 {
 	// compute average density and velocity
 	std::vector<int> agentsInGroup;
 	avgVel.reset();
 	avgDensity = 0.0f;
-	int gridNum = crowdGrid.size();
-	for (unsigned int i = 0; i<gridNum; i++)
+	int groupNum = crowdGroup.size();
+	for (unsigned int i = 0; i<groupNum; i++)
 	{
-		int gid = crowdGrid[i];
-		int agentNum = (*grids)[gid].agentsInGrid.size();
+		int gid = crowdGroup[i];
+		int agentNum = (*groups)[gid].agentsInGroup.size();
 		avgDensity += agentNum;
 		for (unsigned int j = 0; j<agentNum; j++)
 		{
-			int aid = (*grids)[gid].agentsInGrid[j];
+			int aid = (*groups)[gid].agentsInGroup[j];
 			avgVel += (*agents[aid]).velocity_;
 			agentsInGroup.push_back(aid);
 		}
 	}
-	avgDensity /= gridNum;
+	avgDensity /= groupNum;
 
 	int agentNum = agentsInGroup.size();
 	avgVel = avgVel / agentNum;
@@ -157,17 +157,17 @@ void CrowdGroup::TrackContour(std::vector<Grid>* grids, HmAgent** agents)
 
 }
 
-void CrowdGroup::GetGroupAgent(Vector2& pos, Vector2& vel, float& radius, std::vector<Grid>* grids, HmAgent** agents)
+void CrowdGroup::GetGroupAgent(Vector2& pos, Vector2& vel, float& radius, std::vector<Group>* grids, HmAgent** agents)
 {
 	vel.reset();
 	pos.reset();
 	int agentNum = 0;
-	for(unsigned int i=0; i<crowdGrid.size(); i++)
+	for (unsigned int i = 0; i<crowdGroup.size(); i++)
 	{
-		int gid = crowdGrid[i];
-		for (unsigned int j = 0; j<(*grids)[gid].agentsInGrid.size(); j++)
+		int gid = crowdGroup[i];
+		for (unsigned int j = 0; j<(*grids)[gid].agentsInGroup.size(); j++)
 		{
-			int aid = (*grids)[gid].agentsInGrid[j];
+			int aid = (*grids)[gid].agentsInGroup[j];
 			//avgVel += (*agents)[aid].velocity_;
 			vel += (*agents[aid]).velocity_;
 			pos += Vector2((*agents[aid]).npos[0], (*agents[aid]).npos[2]);
@@ -179,12 +179,12 @@ void CrowdGroup::GetGroupAgent(Vector2& pos, Vector2& vel, float& radius, std::v
 	std::vector<float> dists;
 	dists.resize(agentNum);
 	int count = 0;
-	for(unsigned int i=0; i<crowdGrid.size(); i++)
+	for (unsigned int i = 0; i<crowdGroup.size(); i++)
 	{
-		int gid = crowdGrid[i];
-		for (unsigned int j = 0; j<(*grids)[gid].agentsInGrid.size(); j++)
+		int gid = crowdGroup[i];
+		for (unsigned int j = 0; j<(*grids)[gid].agentsInGroup.size(); j++)
 		{
-			int aid = (*grids)[gid].agentsInGrid[j];
+			int aid = (*grids)[gid].agentsInGroup[j];
 			Vector2 p((*agents[aid]).npos[0], (*agents[aid]).npos[2]);
 			Vector2 vec = p - pos;
 			dists[count] = float(sqrt(vec.dot(vec)));

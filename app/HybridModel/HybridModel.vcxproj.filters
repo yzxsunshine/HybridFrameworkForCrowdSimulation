@@ -150,6 +150,9 @@
     <ClCompile Include="..\..\thirdparty\GraphCut\maxflow.cpp">
       <Filter>HybridAlgorithm\Graphcut</Filter>
     </ClCompile>
+    <ClCompile Include="HybridAlgorithm\Group.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HybridAlgorithm\CrowdGroup.h">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="..\..\thirdparty\GraphCut\LinkedBlockList.h">
       <Filter>HybridAlgorithm\Graphcut</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridAlgorithm\Group.h">
+      <Filter>HybridAlgorithm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

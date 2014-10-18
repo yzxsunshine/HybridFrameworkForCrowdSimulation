@@ -79,7 +79,8 @@ void Tile::BuildGrids(NavMesh* nav, std::vector<Grid>& grids)
 	grid.gridID = startID;
 	grid.m_faces.push_back(m_faces[0]);
 	grid.tileID = m_tileID;
-	grid.m_box = m_box;
+	grid.m_group.init(startID, m_faceArea[0]);
+	grid.m_group.m_box = m_box;
 	grid.m_area = m_faceArea[0];
 	grids.push_back(grid);
 	gridCRId.push_back(faceCRIds[0]);
@@ -115,7 +116,8 @@ void Tile::BuildGrids(NavMesh* nav, std::vector<Grid>& grids)
 			grid.gridID = grids.size();
 			grid.m_faces.push_back(m_faces[i]);
 			grid.tileID = m_tileID;
-			grid.m_box = m_box;
+			grid.m_group.init(startID, m_faceArea[0]);
+			grid.m_group.m_box = m_box;
 			grid.m_area = m_faceArea[i];
 			grids.push_back(grid);
 			gridCRId.push_back(faceCRIds[i]);
@@ -179,7 +181,7 @@ void Tile::BuildGridNeighbor(NavMesh* nav, std::vector<Grid>& grids)
 		int gid = m_gridIds[l];
 		for(int i=0; i<4; i++)	// traverse all neighbor of the tile
 		{
-			grids[gid].m_neighbor[i] = -1;
+			grids[gid].m_group.m_neighbor[i] = -1;
 
 			if(m_neighbor[i]!=NULL)
 			{
@@ -193,7 +195,7 @@ void Tile::BuildGridNeighbor(NavMesh* nav, std::vector<Grid>& grids)
 						iter = gridFaceNeighborIdDict[l].find(fid);
 						if(iter != gridFaceNeighborIdDict[l].end())
 						{	// gotha, we have a neighbor grid here, then we should figure out how to build the neighbor relationship
-							grids[gid].m_neighbor[i] = ngid;
+							grids[gid].m_group.m_neighbor[i] = ngid;
 							foundNeighbor = true;
 						}
 					}

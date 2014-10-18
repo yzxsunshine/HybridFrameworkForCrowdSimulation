@@ -1,7 +1,7 @@
 #ifndef CROWDGROUP_H
 #define CROWDGROUP_H
 
-#include "Grid.h"
+#include "Group.h"
 #include "HmAgent.h"
 #include <vector>
 
@@ -19,7 +19,7 @@ struct elem_grid {	//这两个结构用来在重新排布人群的时候排序
 class CrowdGroup
 {
 public:
-	std::vector<int> crowdGrid;//建立vector，存储每个流体区域的所有格子
+	std::vector<int> crowdGroup;//建立vector，存储每个流体区域的所有格子
 	long int RegionID;
 	std::vector<int> contourAgent;
 	std::vector<Vector2> contourPts;
@@ -31,8 +31,8 @@ public:
 	CrowdGroup(void);
 	~CrowdGroup(void);
 	void AddGrid(int gridId);
-	void TrackContour(std::vector<Grid>* grids, HmAgent** agents);
-	void GetGroupAgent(Vector2& pos, Vector2& vel, float& radius, std::vector<Grid>* grids, HmAgent** agents);	// used to add group as a agent to simulate interaction between groups
+	void TrackContour(std::vector<Group>* grids, HmAgent** agents);
+	void GetGroupAgent(Vector2& pos, Vector2& vel, float& radius, std::vector<Group>* grids, HmAgent** agents);	// used to add group as a agent to simulate interaction between groups
 };
 
 #endif

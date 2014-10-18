@@ -2,7 +2,7 @@
 #define HYBRIDMODELCROWD_H
 
 #include "HmAgent.h"
-#include "Grid.h"
+#include "Group.h"
 #include "CrowdGroup.h"
 #include <vector>
 
@@ -22,7 +22,7 @@ public:
 	HmAgent** m_activeAgents;
 	std::vector<HmAgent*> m_selected;
 	std::vector<CrowdGroup> m_fluidgroups;	//唯一一个大小不确定的变量，用vector表示
-	float m_gridsize;
+	float m_groupsize;
 	int m_cellsize;
 	float m_min[2];
 	float m_max[2];
@@ -41,7 +41,7 @@ public:
 	float m_densityThreshold;	//格子稠密的阈值
 	NavMeshQuery* m_navquery;
 	TileCtrl*	m_tileCtrl;
-	std::vector<Grid>* m_grids;
+	std::vector<Group>* m_groups;
 	std::vector<int> m_actGridIds;
 
 	RVO::RVOSimulator* m_rvosim;	// agent agent rvo

@@ -9,6 +9,7 @@ static const int MAX_ITERS_PER_UPDATE = 100;
 
 static const int MAX_PATHQUEUE_NODES = 4096;
 static const int MAX_COMMON_NODES = 512;
+static const int ITER_REARRANGE = 10;
 
 static void integrate(HmAgent* ag, const float dt)
 {
@@ -104,7 +105,7 @@ int getNearestLog(int& num)
 
 HybridModelCrowd::HybridModelCrowd():m_agents(0), m_maxAgents(0), m_activeAgents(0)
 												, m_navquery(0), m_rvosim(0), m_fluidsim(0), m_maxGrids(0)
-												, m_groupRVOSim(0), m_obstacleRVOSim(0)
+												, m_groupRVOSim(0), m_obstacleRVOSim(0), m_groups(0)
 {
 
 }
@@ -137,6 +138,9 @@ void HybridModelCrowd::purge()
 	if(m_obstacleRVOSim!=0)
 		delete m_obstacleRVOSim;
 
+	if (m_groups != 0)
+		delete m_groups;
+
 	m_groupRVOSim = 0;
 	m_obstacleRVOSim = 0;
 	m_rvosim = 0;
@@ -150,13 +154,19 @@ bool HybridModelCrowd::init(const int maxAgents, const float maxAgentRadius, Nav
 	
 	m_maxAgents = maxAgents;
 	m_maxAgentRadius = maxAgentRadius;
-	m_gridsize = grid_size;	//真实比例
+	m_groupsize = grid_size;	//真实比例
 	m_cellsize = (int)(grid_size/maxAgentRadius/2);	//h
 	m_min[0] = ox;	m_min[1] = oy;	m_max[0] = ex;	m_max[1] = ey;
 
 	m_navquery = nmq;
 	m_tileCtrl = nmq->GetTileCtrl();
-	m_grids = &m_tileCtrl->m_grids;
+	int groupNum = m_tileCtrl->m_grids.size();
+	m_groups = new std::vector < Group > ;
+	(*m_groups).resize(groupNum);
+	for (int i = 0; i < groupNum; i++)
+	{
+		(*m_groups)[i] = m_tileCtrl->m_grids[i].m_group;
+	}
 	m_rvosim = new RVO::RVOSimulator();
 	m_groupRVOSim = new RVO::RVOSimulator();
 	m_obstacleRVOSim = new RVO::RVOSimulator();
@@ -190,16 +200,13 @@ bool HybridModelCrowd::init(const int maxAgents, const float maxAgentRadius, Nav
 
 	m_numofgridinrow = float(ceil(mapsize / grid_size));
 	mapsize = m_numofgridinrow*grid_size;
-	for(unsigned int i=0; i<m_grids->size(); i++)
+	for(unsigned int i=0; i<m_groups->size(); i++)
 	{
-		if((*m_grids)[i].m_obstacleStatus != FULL_OBSTACLE)
-		{
-			m_actGridIds.push_back(i);
-		}
+		m_actGridIds.push_back(i);
 	}
 
 	m_fluidsim = new FluidSimulator();
-	m_fluidsim->init(m_grids, m_activeAgents, &m_fluidgroups);
+	m_fluidsim->init(m_groups, m_activeAgents, &m_fluidgroups);
 	
 
 	return true;
@@ -299,9 +306,9 @@ int HybridModelCrowd::addAgent(const float* pos, const dtCrowdAgentParams* param
 		return -1;
 	}
 	ag->grid_now_id = gridID;
-	(*m_grids)[gridID].agentsInGrid.push_back(idx);
-	(*m_grids)[gridID].nowDensity = (*m_grids)[gridID].agentsInGrid.size()*1.0/(m_cellsize*m_cellsize);
-	(*m_grids)[gridID].formerDensity = (*m_grids)[gridID].nowDensity;
+	(*m_groups)[gridID].agentsInGroup.push_back(idx);
+	(*m_groups)[gridID].nowDensity = (*m_groups)[gridID].agentsInGroup.size()*1.0/(m_cellsize*m_cellsize);
+	(*m_groups)[gridID].formerDensity = (*m_groups)[gridID].nowDensity;
 	
 	return idx;
 }
@@ -498,7 +505,7 @@ void HybridModelCrowd::update(const float dt)
 	
 	for(int i=0; i<m_maxGrids;i++)
 	{
-		(*m_grids)[m_actGridIds[i]].agentsInGrid.clear();
+		(*m_groups)[m_actGridIds[i]].agentsInGroup.clear();
 	}
 	// Calculate steering.
 	//printf("========================AGENT_INFO========================\n");
@@ -534,15 +541,15 @@ void HybridModelCrowd::update(const float dt)
 		// Set the desired velocity.
 		dtVcopy(ag->dvel, dvel);
 		ag->setHmAgent(ag->npos,ag->dvel);
-		(*m_grids)[ag->curGrid].agentsInGrid.push_back(ag->HmAgent_id);
+		(*m_groups)[ag->curGrid].agentsInGroup.push_back(ag->HmAgent_id);
 		//printf("%f %f %f %f %f %f %d\n", ag->npos[0], ag->npos[1], ag->npos[2], ag->dvel[0], ag->dvel[1], ag->dvel[2], ag->color_id);
 		//m_rvosim->agents_.push_back(ag);
 	}
 	//m_densityThreshold = EPSILON;
 	for(int i=0; i<m_maxGrids;i++)
 	{
-		(*m_grids)[m_actGridIds[i]].UpdateDensity(m_densityThreshold, agentSize);
-		(*m_grids)[m_actGridIds[i]].avgVelocity.reset();
+		(*m_groups)[m_actGridIds[i]].UpdateDensity(m_densityThreshold, agentSize);
+		(*m_groups)[m_actGridIds[i]].avgVelocity.reset();
 	}
 	//
 	TimeVal endTime = getPerfTime();
@@ -559,7 +566,7 @@ void HybridModelCrowd::update(const float dt)
 		{
 			Vector2 pos, vel;
 			float radius;
-			m_fluidgroups[i].GetGroupAgent(pos, vel, radius,  m_grids, m_activeAgents);
+			m_fluidgroups[i].GetGroupAgent(pos, vel, radius,  m_groups, m_activeAgents);
 			float groupSpeed = sqrt(vel.dot(vel));
 			//m_groupRVOSim->addAgent(pos, radius*50, 8, radius*50.0f, radius*50.0f, radius*8, groupSpeed, vel);
 		}
@@ -570,20 +577,23 @@ void HybridModelCrowd::update(const float dt)
 		}
 	}*/
 	m_fluidsim->doStep();
-	Rearrange();
+	for (int i = 0; i < ITER_REARRANGE; i++)
+	{
+		Rearrange();
+	}
 	endTime = getPerfTime();
 	printf("Fluid Time: %f\n",getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
 	startTime = getPerfTime();
 	for(unsigned int i=0; i<m_fluidgroups.size(); i++)
 	{
 		
-		for (unsigned int j = 0; j < m_fluidgroups[i].crowdGrid.size(); j++)
+		for (unsigned int j = 0; j < m_fluidgroups[i].crowdGroup.size(); j++)
 		{
-			int gid = m_fluidgroups[i].crowdGrid[j];
-			std::vector<Vector2> obstacle = (*m_grids)[gid].m_box.GetCorners();
+			int gid = m_fluidgroups[i].crowdGroup[j];
+			std::vector<Vector2> obstacle = (*m_groups)[gid].m_box.GetCorners();
 			for (unsigned int k = 0; k<obstacle.size(); k++)
-				obstacle[k] = obstacle[k] + (*m_grids)[gid].avgVelocity * dt;
-			m_rvosim->addObstacle(obstacle, (*m_grids)[gid].nowDensity, (*m_grids)[gid].avgVelocity);
+				obstacle[k] = obstacle[k] + (*m_groups)[gid].avgVelocity * dt;
+			m_rvosim->addObstacle(obstacle, (*m_groups)[gid].nowDensity, (*m_groups)[gid].avgVelocity);
 		}
 		/*
 		for (unsigned int j = 0; j < m_fluidgroups[i].contours.size(); j++)
@@ -637,21 +647,21 @@ void HybridModelCrowd::MergeGrid()
 	m_fluidgroups.clear();	//清空群体数组
 	std::vector<int> regionMark;
 	std::vector<int> denseGridIds;
-	int gridNum = static_cast<int>(m_grids->size());
+	int gridNum = static_cast<int>(m_groups->size());
 	regionMark.resize(gridNum);
 	denseGridIds.resize(gridNum);
 
 	for(int i=0; i<gridNum; i++)
 	{
-		if((*m_grids)[i].m_densityStatus==WHITE)
+		if((*m_groups)[i].m_densityStatus==WHITE)
 			continue;
 		bool hasDense = false;
-		for(vector<int>::iterator it =(*m_grids)[i].agentsInGrid.begin();it!=(*m_grids)[i].agentsInGrid.end();it++)
+		for(vector<int>::iterator it =(*m_groups)[i].agentsInGroup.begin();it!=(*m_groups)[i].agentsInGroup.end();it++)
 		{
 			// We add a bilinear interpolation to solve the continuity problem on the border of dense crowd
 			std::vector<int> neighborIds;
 			Vector2 leftBottom, rightTop;
-			bool hasInterp = (*m_grids)[i].GetInterpolationNeighbors(m_agents[*it].position_, m_grids, neighborIds, leftBottom, rightTop);
+			bool hasInterp = (*m_groups)[i].GetInterpolationNeighbors(m_agents[*it].position_, m_groups, neighborIds, leftBottom, rightTop);
 			if(hasInterp)
 			{
 				float densities[4];
@@ -660,7 +670,7 @@ void HybridModelCrowd::MergeGrid()
 				{
 					if(neighborIds[di] >= 0)
 					{
-						densities[di] = (float)((*m_grids)[neighborIds[di]].nowDensity);
+						densities[di] = (float)((*m_groups)[neighborIds[di]].nowDensity);
 					}
 				}
 				float density = bilateralInterpolation(densities[0], densities[1], densities[2], densities[3], 
@@ -700,10 +710,10 @@ void HybridModelCrowd::MergeGrid()
 		int gid = denseGridIds[i];
 		for(int j=0;j<4;j++)//遍历四个邻居
 		{
-			int ngid = (*m_grids)[gid].m_neighbor[j];
+			int ngid = (*m_groups)[gid].m_neighbor[j];
 			if(ngid <= 0)
 				continue;
-			if((*m_grids)[ngid].m_densityStatus == BLACK)
+			if((*m_groups)[ngid].m_densityStatus == BLACK)
 			{
 				if(regionMark[ngid] >= regionMark[gid])
 				{
@@ -772,53 +782,73 @@ void HybridModelCrowd::Rearrange()
 {
 	float elem_size = m_maxAgentRadius*2;
 	int grid_area = m_cellsize*m_cellsize;
-	elem_grid* elem_grids = (elem_grid*)malloc(grid_area*sizeof(elem_grid));
+	elem_grid* elem_groups = (elem_grid*)malloc(grid_area*sizeof(elem_grid));
 #pragma omp parallel for
 	for (unsigned int crowdi = 0; crowdi<m_fluidgroups.size(); crowdi++)
 	{
-		for (unsigned int gridi = 0; gridi < m_fluidgroups[crowdi].crowdGrid.size(); gridi++)
+		for (unsigned int gridi = 0; gridi < m_fluidgroups[crowdi].crowdGroup.size(); gridi++)
 		{
-			int gid = m_fluidgroups[crowdi].crowdGrid[gridi];
-			int people_num = (*m_grids)[gid].agentsInGrid.size();
-			elem_grid* agent_grids = (elem_grid*)malloc(people_num*sizeof(elem_grid));
-			//先对格子中的每个单位区域和人都计算一下在速度方向上的投影，然后根据投影结果进行排序
-			int agentInRow = this->m_gridsize/m_maxAgentRadius/2;
-			float elem_grid_size = this->m_gridsize/(1.0*agentInRow);
-			for(int r = 0;r<agentInRow;r++) {
-				for(int c=0;c<agentInRow;c++) {
-					int id = r*agentInRow+c;
-					elem_grids[id].id = id;
-					elem_grids[id].center = Vector2((*m_grids)[gid].m_box.x()+c*elem_size , (*m_grids)[gid].m_box.y()+r*elem_size);
-					elem_grids[id].score = float(elem_grids[id].center.dot((*m_grids)[gid].avgVelocity));
-				}
+			int gid = m_fluidgroups[crowdi].crowdGroup[gridi];
+			int people_num = (*m_groups)[gid].agentsInGroup.size();
+			int firstGroupNum = people_num;
+			// put neighbor groups agents in
+			for (int i = 0; i < 4; i++) 
+			{
+				int nid = (*m_groups)[gid].m_neighbor[i];
+				if (nid < 0)
+					continue; 
+				people_num += (*m_groups)[nid].agentsInGroup.size();
 			}
+			
+			elem_grid* agent_grids = (elem_grid*)malloc(people_num*sizeof(elem_grid));
+			int agentInRow = this->m_groupsize/m_maxAgentRadius/2;
+			float elem_grid_size = this->m_groupsize/(1.0*agentInRow);
+			// Assign parameters from each agent to the agent list used for sorting.
 			Vector2 mean_center(0,0);
-			for(int i=0;i<people_num;i++)
+			int agentCount = 0;
+			for (int i = 0; i<firstGroupNum; i++)
 			{
 				agent_grids[i].id = i;
-				int agent_id = (*m_grids)[gid].agentsInGrid[i];		
+				int agent_id = (*m_groups)[gid].agentsInGroup[i];		
 				agent_grids[i].center = Vector2(m_agents[agent_id].npos[0] , m_agents[agent_id].npos[2]);
 				agent_grids[i].agent = &m_agents[agent_id];
-				//agent_grids[i].score = agent_grids[i].center.dot(cur_grid->avgVelocity);
+				agent_grids[i].radius = m_agents[agent_id].radius_;
 				mean_center += agent_grids[i].center;
+				agentCount++;
 			}
+			mean_center /= firstGroupNum;
+			
+			for (int i = 0; i < 4; i++)
+			{
+				int nid = (*m_groups)[gid].m_neighbor[i];
+				if (nid < 0)
+					continue;
+				for (int j = 0; j<(*m_groups)[nid].agentsInGroup.size(); j++)
+				{
+					agent_grids[agentCount].id = agentCount;
+					int agent_id = (*m_groups)[nid].agentsInGroup[j];
+					agent_grids[agentCount].center = Vector2(m_agents[agent_id].npos[0], m_agents[agent_id].npos[2]);
+					agent_grids[agentCount].agent = &m_agents[agent_id];
+					agent_grids[agentCount].radius = m_agents[agent_id].radius_;
+					agentCount++;
+				}
+			}
+			
 			for(int i=0;i<people_num;i++)
 			{
-				agent_grids[i].score = float((agent_grids[i].center-mean_center).dot((*m_grids)[gid].avgVelocity));
+				agent_grids[i].score = float((agent_grids[i].center-mean_center).dot((*m_groups)[gid].avgVelocity));	// projection on velocity
 			}
 
-			//排序
-			qsort(elem_grids,grid_area,sizeof(elem_grid), compare);
-
+			//sort agents by projection
 			qsort(agent_grids,people_num,sizeof(elem_grid), compare);
 
-			//重排人群
+			//insert agent into buckets
 			std::vector<std::list<elem_grid>> agent_bucket;
-			Vector2 vertVelocity((*m_grids)[gid].avgVelocity.y(),-(*m_grids)[gid].avgVelocity.x());//顺时针旋转90度
+			Vector2 vertVelocity((*m_groups)[gid].avgVelocity.y(),-(*m_groups)[gid].avgVelocity.x());//顺时针旋转90度
 			int count = -1;
 			for(int i=0;i<people_num;i++)
 			{
-				if(i==0||agent_grids[0].score-agent_grids[i].score>(count+1)*elem_grid_size)
+				if(i==0||agent_grids[0].score-agent_grids[i].score>(count+1)*elem_grid_size)	// create buckets when first guy in the bucket appears
 				{
 					std::list<elem_grid> bucket;
 					bucket.push_back(agent_grids[i]);
@@ -830,48 +860,95 @@ void HybridModelCrowd::Rearrange()
 					std::list<elem_grid>::iterator iter;
 					for(iter=agent_bucket[count].begin();iter!=agent_bucket[count].end();iter++)
 					{
-						if(iter->center.dot(vertVelocity)>agent_grids[i].center.dot(vertVelocity))
+						if(iter->center.dot(vertVelocity)>agent_grids[i].center.dot(vertVelocity))	// if the agent is on the left hand side of the tail
 						{
 							agent_bucket[count].insert(iter,agent_grids[i]);
 							break;
 						}
 					}
 					if(iter==agent_bucket[count].end())
-						agent_bucket[count].push_back(agent_grids[i]);//此处需要插入排序
+						agent_bucket[count].push_back(agent_grids[i]);// if the agent is on the most right hand side
 				}
 				//agent_grids[i]
 
 			}
-			
+			// rearrange
 			for (unsigned int i = 0; i<agent_bucket.size(); i++)
 			{
-				//同层
-				std::list<elem_grid>::iterator iter,nextiter;
-				for(iter=agent_bucket[i].begin();iter!=agent_bucket[i].end();iter++)
+				
+				std::list<elem_grid>::iterator riter, nextRiter;
+				std::list<elem_grid>::reverse_iterator liter, nextLiter;
+				int bucketSize = agent_bucket[i].size();
+				liter = agent_bucket[i].rbegin();
+				riter = agent_bucket[i].begin();
+				int midId = bucketSize / 2;
+				// set the pointers at middle point
+				for (int i = 0; i<midId; i++)
 				{
-					nextiter=iter;
-					nextiter++;
-					for(;nextiter!=agent_bucket[i].end();nextiter++)
+					riter++;
+				}
+				for (int i = midId + 1; i < bucketSize; i++)
+				{
+					liter++;
+				}
+				// liter is from the middle to the beginning, riter is from the middle to the end
+				for (; liter != agent_bucket[i].rend() ; liter++)
+				{
+					nextLiter=liter;
+					nextLiter++;
+					for (; nextLiter != agent_bucket[i].rend(); nextLiter++)
 					{
-						if(iter->center.getDistance(nextiter->center)<elem_grid_size)
+						if (liter->center.getDistance(nextLiter->center)<elem_grid_size)
 						{
-							Vector2 dir = normalize(nextiter->center-iter->center);
-							nextiter->center = iter->center+dir*elem_grid_size;
-							nextiter->agent->npos[0] = float(nextiter->center.x());
-							nextiter->agent->npos[2] = float(nextiter->center.y());
+							Vector2 dir = normalize(nextLiter->center - liter->center);
+							nextLiter->center = liter->center + dir*elem_grid_size;
+							nextLiter->agent->npos[0] = float(nextLiter->center.x());
+							nextLiter->agent->npos[2] = float(nextLiter->center.y());
+
 						}
 					}
 					if(i+1<agent_bucket.size())
 					{
-						for(nextiter=agent_bucket[i+1].begin();nextiter!=agent_bucket[i+1].end();nextiter++)
+						for (nextLiter = agent_bucket[i + 1].rbegin(); nextLiter != agent_bucket[i + 1].rend(); nextLiter++)
 						{
-							if(iter->center.getDistance(nextiter->center)<elem_grid_size)
+							if (liter->center.getDistance(nextLiter->center)<elem_grid_size)
 							{
-								Vector2 dir = normalize(nextiter->center-iter->center);
-								nextiter->center = iter->center+dir*elem_grid_size;
-								nextiter->agent->npos[0] = float(nextiter->center.x());
-								nextiter->agent->npos[2] = float(nextiter->center.y());
+								Vector2 dir = normalize(nextLiter->center - liter->center);
+								nextLiter->center = liter->center + dir*elem_grid_size;
+								nextLiter->agent->npos[0] = float(nextLiter->center.x());
+								nextLiter->agent->npos[2] = float(nextLiter->center.y());
 							}	
+						}
+					}
+				}
+
+				// liter is from the middle to the beginning, riter is from the middle to the end
+				for (; riter != agent_bucket[i].end(); riter++)
+				{
+					nextRiter = riter;
+					nextRiter++;
+					for (; nextRiter != agent_bucket[i].end(); nextRiter++)
+					{
+						if (riter->center.getDistance(nextRiter->center)<elem_grid_size)
+						{
+							Vector2 dir = normalize(nextRiter->center - riter->center);
+							nextRiter->center = riter->center + dir*elem_grid_size;
+							nextRiter->agent->npos[0] = float(nextRiter->center.x());
+							nextRiter->agent->npos[2] = float(nextRiter->center.y());
+
+						}
+					}
+					if (i + 1<agent_bucket.size())
+					{
+						for (nextRiter = agent_bucket[i + 1].begin(); nextRiter != agent_bucket[i + 1].end(); nextRiter++)
+						{
+							if (riter->center.getDistance(nextRiter->center)<elem_grid_size)
+							{
+								Vector2 dir = normalize(nextRiter->center - riter->center);
+								nextRiter->center = riter->center + dir*elem_grid_size;
+								nextRiter->agent->npos[0] = float(nextRiter->center.x());
+								nextRiter->agent->npos[2] = float(nextRiter->center.y());
+							}
 						}
 					}
 				}
@@ -879,7 +956,7 @@ void HybridModelCrowd::Rearrange()
 			free(agent_grids);
 		}
 	}
-	free(elem_grids);
+	free(elem_groups);
 }
 
 void HybridModelCrowd::save(FILE* fp)

@@ -339,12 +339,12 @@ void HybridCrowdToolState::handleRender()
 		fcol[i] = duRGBA(64, 64, 128, 128);
 	for (int i = 0; i < crowdNum; i++)
 	{
-		for (unsigned int j = 0; j < crowd->m_fluidgroups[i].crowdGrid.size(); j++)
+		for (unsigned int j = 0; j < crowd->m_fluidgroups[i].crowdGroup.size(); j++)
 		{
-			int gid = crowd->m_fluidgroups[i].crowdGrid[j];
-			std::vector<Vector2> obstacle = (*(crowd->m_grids))[gid].m_box.GetCorners();
+			int gid = crowd->m_fluidgroups[i].crowdGroup[j];
+			std::vector<Vector2> obstacle = (*(crowd->m_groups))[gid].m_box.GetCorners();
 			for (unsigned int k = 0; k<obstacle.size(); k++)
-				obstacle[k] = obstacle[k] + (*(crowd->m_grids))[gid].avgVelocity * 0.03;
+				obstacle[k] = obstacle[k] + (*(crowd->m_groups))[gid].avgVelocity * 0.03;
 			duDebugDrawBox(&dd, obstacle[0].x(), 12.0f, obstacle[0].y(), obstacle[2].x(), 16.0f, obstacle[2].y(), fcol);
 			/*
 			std::vector<Vector2> obstacle = crowd->m_fluidgroups[i].contours[j];
@@ -405,9 +405,9 @@ void HybridCrowdToolState::handleRenderOverlay(double* proj, double* model, int*
 		for(int i=0;i<crowd->m_numofgridinrow*crowd->m_numofgridinrow;i++)
 		{
 			
-			if (gluProject((GLdouble)(*crowd->m_grids)[i].m_box.center_x(), (GLdouble)height, (GLdouble)(*crowd->m_grids)[i].m_box.center_y(),  model, proj, view, &x, &y, &z))
+			if (gluProject((GLdouble)(*crowd->m_groups)[i].m_box.center_x(), (GLdouble)height, (GLdouble)(*crowd->m_groups)[i].m_box.center_y(), model, proj, view, &x, &y, &z))
 			{
-				snprintf(label, 32, "%d", (*crowd->m_grids)[i].gridID);
+				snprintf(label, 32, "%d", (*crowd->m_groups)[i].groupID);
 				imguiDrawText((int)x, (int)y+15, IMGUI_ALIGN_CENTER, label, imguiRGBA(255,255,255,220));
 			}
 		}
