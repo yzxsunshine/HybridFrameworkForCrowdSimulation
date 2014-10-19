@@ -559,23 +559,7 @@ void HybridModelCrowd::update(const float dt)
 	endTime = getPerfTime();
 	printf("Merge Time: %f\n",getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
 	startTime = getPerfTime();
-	/*int groupNum = m_fluidgroups.size();
-	if(groupNum > 1)
-	{
-		for(int i=0; i<groupNum; i++)
-		{
-			Vector2 pos, vel;
-			float radius;
-			m_fluidgroups[i].GetGroupAgent(pos, vel, radius,  m_groups, m_activeAgents);
-			float groupSpeed = sqrt(vel.dot(vel));
-			//m_groupRVOSim->addAgent(pos, radius*50, 8, radius*50.0f, radius*50.0f, radius*8, groupSpeed, vel);
-		}
-		//m_groupRVOSim->doStep();
-		for(int i=0; i<groupNum; i++)
-		{
-			//m_fluidgroups[i].groupVel = m_groupRVOSim->agents_[i]->velocity_;
-		}
-	}*/
+	
 	m_fluidsim->doStep();
 	for (int i = 0; i < ITER_REARRANGE; i++)
 	{

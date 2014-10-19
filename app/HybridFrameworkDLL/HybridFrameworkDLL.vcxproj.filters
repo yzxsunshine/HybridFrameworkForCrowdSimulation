@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="HybridAlgorithm">
+      <UniqueIdentifier>{6a4902b3-1c1c-4746-bdfc-c0ae6fe1f5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HybridAlgorithm\rvo">
+      <UniqueIdentifier>{fc90f96e-5e80-4e1f-86c9-96857282353b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mesh">
+      <UniqueIdentifier>{02dcedd6-15a3-4903-8980-8af9fb4a78a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HybridAlgorithm\gc">
+      <UniqueIdentifier>{540ad8fd-cdb4-4a11-8070-76cf658b833e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,10 +33,136 @@
     <ClCompile Include="HybridFrameworkCtrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\CrowdGroup.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\FluidSimulator.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\Grid.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\Group.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\HmAgent.cpp">
+      <Filter>HybridAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\Agent.cpp">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\KdTree.cpp">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\Obstacle.cpp">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\RVOSimulator.cpp">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\CommonDef.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\NavMesh.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\PerfTimer.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\Tile.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\TileCtrl.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\GCoptimization.cpp">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\graph.cpp">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\LinkedBlockList.cpp">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\GraphCut\maxflow.cpp">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\HybridModel\NavCorridor.cpp">
+      <Filter>mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HybridFrameworkCtrl.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\CrowdGroup.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\FluidSimulator.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Grid.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Group.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\HmAgent.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Rectangle.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Vector2.h">
+      <Filter>HybridAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\Agent.h">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\Definitions.h">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\KdTree.h">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\Obstacle.h">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\RVOSimulator.h">
+      <Filter>HybridAlgorithm\rvo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\CommonDef.h">
+      <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\NavMesh.h">
+      <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\PerfTimer.h">
+      <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\Tile.h">
+      <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\TileCtrl.h">
+      <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\block.h">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\energy.h">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\GCoptimization.h">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\graph.h">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\GraphCut\LinkedBlockList.h">
+      <Filter>HybridAlgorithm\gc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HybridModel\NavCorridor.h">
+      <Filter>mesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

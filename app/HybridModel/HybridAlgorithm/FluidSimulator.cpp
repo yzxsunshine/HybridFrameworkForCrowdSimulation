@@ -6,8 +6,9 @@
 #include "../CommonDef.h"
 
 #define PI 3.14159265359
-float FluidSimulator::m_alpha = 1000;
-float FluidSimulator::m_beta = -1000;
+float FluidSimulator::m_alpha = -100;
+float FluidSimulator::m_beta = 100;
+static const float GC_WEIGHT = 0.7;
 
 FluidSimulator::FluidSimulator(void)
 {
@@ -245,8 +246,8 @@ void FluidSimulator::doStep()
 				int gid = (*m_fluidGroups)[crowdi].crowdGroup[i];
 				int xLabelID = gcHorizontal->whatLabel(i);
 				int yLabelID = gcVertical->whatLabel(i);
-				(*m_groups)[gid].avgVelocity.SetX(m_xLabels[xLabelID]);
-				(*m_groups)[gid].avgVelocity.SetY(m_yLabels[yLabelID]);
+				(*m_groups)[gid].avgVelocity.SetX(m_xLabels[xLabelID] * GC_WEIGHT + (1 - GC_WEIGHT)*(*m_groups)[gid].avgVelocity.x());
+				(*m_groups)[gid].avgVelocity.SetY(m_yLabels[yLabelID] * GC_WEIGHT + (1 - GC_WEIGHT)*(*m_groups)[gid].avgVelocity.y());
 			}
 			delete[] dataCostHorizontal;
 			delete[] dataCostVertical;

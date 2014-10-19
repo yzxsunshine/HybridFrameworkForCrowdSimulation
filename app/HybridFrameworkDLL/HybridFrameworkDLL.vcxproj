@@ -16,13 +16,13 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -38,13 +38,27 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../../bin\</OutDir>
+    <IntDir>../../build/$(Configuration)/</IntDir>
+    <ExecutablePath>../../thirdparty/opengl/bin;../../bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>..\..\thirdparty\vcglib;..\..\thirdparty\;..\..\thirdparty\opengl\include;..\..\thirdparty\GraphCut;$(IncludePath)</IncludePath>
+    <LibraryPath>../../lib;../../thirdparty/opengl/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ExecutablePath>../../thirdparty/opengl/bin;../../bin;$(ExecutablePath)</ExecutablePath>
+    <IncludePath>..\..\thirdparty\vcglib;..\..\thirdparty\;..\..\thirdparty\opengl\include;..\..\thirdparty\GraphCut;$(IncludePath)</IncludePath>
+    <LibraryPath>../../lib;../../thirdparty/opengl/lib;$(LibraryPath)</LibraryPath>
+    <OutDir>../../bin\</OutDir>
+    <IntDir>../../build/$(Configuration)/</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../HybridModel/HybridAlgorithm</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINDLL;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -57,6 +71,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../HybridModel/HybridAlgorithm/;../HybridModel/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_WINDLL;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -65,10 +81,52 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\thirdparty\GraphCut\GCoptimization.cpp" />
+    <ClCompile Include="..\..\thirdparty\GraphCut\graph.cpp" />
+    <ClCompile Include="..\..\thirdparty\GraphCut\LinkedBlockList.cpp" />
+    <ClCompile Include="..\..\thirdparty\GraphCut\maxflow.cpp" />
+    <ClCompile Include="..\HybridModel\CommonDef.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\CrowdGroup.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\FluidSimulator.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\Grid.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\Group.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\HmAgent.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\Agent.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\KdTree.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\Obstacle.cpp" />
+    <ClCompile Include="..\HybridModel\HybridAlgorithm\RVO\RVOSimulator.cpp" />
+    <ClCompile Include="..\HybridModel\NavCorridor.cpp" />
+    <ClCompile Include="..\HybridModel\NavMesh.cpp" />
+    <ClCompile Include="..\HybridModel\PerfTimer.cpp" />
+    <ClCompile Include="..\HybridModel\Tile.cpp" />
+    <ClCompile Include="..\HybridModel\TileCtrl.cpp" />
     <ClCompile Include="HybridFrameworkCtrl.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\thirdparty\GraphCut\block.h" />
+    <ClInclude Include="..\..\thirdparty\GraphCut\energy.h" />
+    <ClInclude Include="..\..\thirdparty\GraphCut\GCoptimization.h" />
+    <ClInclude Include="..\..\thirdparty\GraphCut\graph.h" />
+    <ClInclude Include="..\..\thirdparty\GraphCut\LinkedBlockList.h" />
+    <ClInclude Include="..\HybridModel\CommonDef.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\CrowdGroup.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\FluidSimulator.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Grid.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Group.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\HmAgent.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Rectangle.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\Agent.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\Definitions.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\KdTree.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\Obstacle.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\RVO\RVOSimulator.h" />
+    <ClInclude Include="..\HybridModel\HybridAlgorithm\Vector2.h" />
+    <ClInclude Include="..\HybridModel\NavCorridor.h" />
+    <ClInclude Include="..\HybridModel\NavMesh.h" />
+    <ClInclude Include="..\HybridModel\PerfTimer.h" />
+    <ClInclude Include="..\HybridModel\Tile.h" />
+    <ClInclude Include="..\HybridModel\TileCtrl.h" />
     <ClInclude Include="HybridFrameworkCtrl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

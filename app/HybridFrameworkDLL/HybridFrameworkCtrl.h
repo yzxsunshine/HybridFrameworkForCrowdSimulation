@@ -1,10 +1,10 @@
 #pragma once
 
 #include "HmAgent.h"
-#include "Grid.h"
+#include "Group.h"
 #include "CrowdGroup.h"
 #include <vector>
-
+#include "TileCtrl.h"
 #include "RVO/RVOSimulator.h"
 #include "FluidSimulator.h"
 
@@ -19,7 +19,7 @@ public:
 	HmAgent** m_activeAgents;	// pointer to agents
 	std::vector<HmAgent*> m_selected;	// selected agents
 	std::vector<CrowdGroup> m_densegroups;	//dense groups
-	float m_gridsize;
+	float m_groupsize;
 	int m_cellsize;
 	float m_min[2];
 	float m_max[2];
@@ -30,8 +30,9 @@ public:
 	int m_maxAgents;
 	int m_maxGrids;
 	float m_densityThreshold;	//格子稠密的阈值
-	std::vector<Grid>* m_grids;
+	std::vector<Group>* m_groups;
 	std::vector<int> m_actGridIds;
+	TileCtrl* m_tileCtrl;
 
 	RVO::RVOSimulator* m_rvosim;	// agent agent rvo
 	RVO::RVOSimulator* m_obstacleRVOSim;	// group group rvo
@@ -71,31 +72,10 @@ public:
 	///  @param[in]		idx		The agent index. [Limits: 0 <= value < #getAgentCount()]
 	void removeAgent(const int idx);
 
-	/// Submits a new move request for the specified agent.
-	///  @param[in]		idx		The agent index. [Limits: 0 <= value < #getAgentCount()]
-	///  @param[in]		faceid	The id of face where the agent stands on
-	///  @param[in]		pos		The position within the polygon. [(x, y, z)]
-	/// @return True if the request was successfully submitted.
-	bool requestMoveTarget(const int idx, int faceId, const float* pos);
-
-
-	/// Submits a new move request for the specified agent.
-	///  @param[in]		idx		The agent index. [Limits: 0 <= value < #getAgentCount()]
-	///  @param[in]		vel		The movement velocity. [(x, y, z)]
-	/// @return True if the request was successfully submitted.
-	bool requestMoveVelocity(const int idx, const float* vel);
-
-	/// Resets any request for the specified agent.
-	///  @param[in]		idx		The agent index. [Limits: 0 <= value < #getAgentCount()]
-	/// @return True if the request was successfully reseted.
-	bool resetMoveTarget(const int idx);
-
 	/// Updates the steering and positions of all agents.
 	///  @param[in]		dt		The time, in seconds, to update the simulation. [Limit: > 0]
 	///  @param[out]	debug	A debug object to load with debug information. [Opt]
 	void update(const float dt);
-
-	void updateMoveRequest(const float dt);
 
 	void save(FILE* fp);
 
