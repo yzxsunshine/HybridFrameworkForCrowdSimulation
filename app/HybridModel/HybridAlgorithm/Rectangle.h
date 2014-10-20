@@ -149,6 +149,7 @@ public:
 	{
 		return BOTTOM_EDGE;
 	}
+	return OUTSIDE;
   }
 
   std::vector<Vector2> GetCorners() {

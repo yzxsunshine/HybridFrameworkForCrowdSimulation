@@ -63,6 +63,8 @@ float getDistance(const vcg::Point3f& p0, const vcg::Point3f& p1);
 
 float ComputeTriArea(vcg::Point3f a, vcg::Point3f b, vcg::Point3f c);
 
+bool PtInTriangle(vcg::Point2f p, vcg::Point2f p0, vcg::Point2f p1, vcg::Point2f p2);
+
 int GetPointSide(vcg::Point2f ptA, vcg::Point2f ptB, vcg::Point2f wayPt);
 int GetIntersection(vcg::Point2f startPt, vcg::Point2f endPt
 				  , vcg::Point2f lineA, vcg::Point2f lineB, vcg::Point2f* intersectPt=NULL);

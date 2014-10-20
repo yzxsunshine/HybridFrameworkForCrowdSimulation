@@ -39,17 +39,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>../../bin\</OutDir>
+    <OutDir>../../bin/$(Configuration)/</OutDir>
     <IntDir>../../build/$(Configuration)/</IntDir>
     <ExecutablePath>../../thirdparty/opengl/bin;../../bin;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>..\..\thirdparty\vcglib;..\..\thirdparty\;..\..\thirdparty\opengl\include;..\..\thirdparty\GraphCut;$(IncludePath)</IncludePath>
-    <LibraryPath>../../lib;../../thirdparty/opengl/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\thirdparty\vcglib;..\..\thirdparty\;..\..\thirdparty\opengl\include;..\..\thirdparty\GraphCut;..\..\thirdparty\kbool\include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../lib;../../thirdparty/opengl/lib;../../thirdparty/kbool/lib/$(Configuration)/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ExecutablePath>../../thirdparty/opengl/bin;../../bin;$(ExecutablePath)</ExecutablePath>
-    <IncludePath>..\..\thirdparty\vcglib;..\..\thirdparty\;..\..\thirdparty\opengl\include;..\..\thirdparty\GraphCut;$(IncludePath)</IncludePath>
-    <LibraryPath>../../lib;../../thirdparty/opengl/lib;$(LibraryPath)</LibraryPath>
-    <OutDir>../../bin\</OutDir>
+    <IncludePath>..\..\thirdparty\vcglib;..\..\thirdparty\;..\..\thirdparty\opengl\include;..\..\thirdparty\GraphCut;..\..\thirdparty\kbool\include;$(IncludePath)</IncludePath>
+    <LibraryPath>../../lib;../../thirdparty/opengl/lib;../../thirdparty/kbool/lib/$(Configuration)/;$(LibraryPath)</LibraryPath>
+    <OutDir>../../bin/$(Configuration)/</OutDir>
     <IntDir>../../build/$(Configuration)/</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -57,11 +57,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../HybridModel/HybridAlgorithm</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../HybridModel/HybridAlgorithm/;../HybridModel/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WINDLL;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kbool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,6 +79,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kbool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -100,6 +102,7 @@
     <ClCompile Include="..\HybridModel\PerfTimer.cpp" />
     <ClCompile Include="..\HybridModel\Tile.cpp" />
     <ClCompile Include="..\HybridModel\TileCtrl.cpp" />
+    <ClCompile Include="HybridFrameworkAPI.cpp" />
     <ClCompile Include="HybridFrameworkCtrl.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -109,6 +112,7 @@
     <ClInclude Include="..\..\thirdparty\GraphCut\GCoptimization.h" />
     <ClInclude Include="..\..\thirdparty\GraphCut\graph.h" />
     <ClInclude Include="..\..\thirdparty\GraphCut\LinkedBlockList.h" />
+    <ClInclude Include="..\..\thirdparty\kbool\include\booleng.h" />
     <ClInclude Include="..\HybridModel\CommonDef.h" />
     <ClInclude Include="..\HybridModel\HybridAlgorithm\CrowdGroup.h" />
     <ClInclude Include="..\HybridModel\HybridAlgorithm\FluidSimulator.h" />
@@ -127,6 +131,7 @@
     <ClInclude Include="..\HybridModel\PerfTimer.h" />
     <ClInclude Include="..\HybridModel\Tile.h" />
     <ClInclude Include="..\HybridModel\TileCtrl.h" />
+    <ClInclude Include="HybridFrameworkAPI.h" />
     <ClInclude Include="HybridFrameworkCtrl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

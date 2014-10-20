@@ -13,6 +13,7 @@ public class NavMeshProcess : MonoBehaviour {
 		NavMeshTriangulation navMeshTris = NavMesh.CalculateTriangulation();
 		int indNum = navMeshTris.indices.Length;
 		int triNum = navMeshTris.vertices.Length;
+
 	}
 	
 	// Update is called once per frame

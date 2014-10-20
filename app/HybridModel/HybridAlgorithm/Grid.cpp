@@ -25,28 +25,20 @@ bool Grid::GetNearestFace(vcg::Point3f& pos, int& faceID, NavMesh* nav, std::vec
 
 bool Grid::GetNearestFace(const float* pos, int& faceID, NavMesh* nav, std::vector<Grid>& grids, float* nearestPos)
 {
-	vcg::Point2f a, b, p;
+	vcg::Point2f a, b, c, p;
 	p.X() = pos[0];
 	p.Y() = pos[2];
 	for (int j = 0; j<(int)m_faces.size(); j++)
 	{
 		int fid = m_faces[j];
 		int sideCount = 0;
-		for(int k=0; k<3; k++)
-		{
-			int aid = k;
-			int bid = (k+1)%3;
-			a.X() = nav->face[fid].V(aid)->P().X();
-			a.Y() = nav->face[fid].V(aid)->P().Z();
-			b.X() = nav->face[fid].V(bid)->P().X();
-			b.Y() = nav->face[fid].V(bid)->P().Z();
-			int status = GetPointSide(a, b, p);
-			if(status == RIGHT_SIDE || status == ON_LINE)
-			{
-				sideCount++;
-			}
-		}
-		if(sideCount==3)
+		a.X() = nav->face[fid].V(0)->P().X();
+		a.Y() = nav->face[fid].V(0)->P().Z();
+		b.X() = nav->face[fid].V(1)->P().X();
+		b.Y() = nav->face[fid].V(1)->P().Z();
+		c.X() = nav->face[fid].V(2)->P().X();
+		c.Y() = nav->face[fid].V(2)->P().Z();
+		if (PtInTriangle(p, a, b, c))
 		{
 			faceID = fid;
 			float height;

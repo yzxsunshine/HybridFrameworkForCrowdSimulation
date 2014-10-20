@@ -104,4 +104,5 @@ bool Group::GetInterpolationNeighbors(Vector2 pos, std::vector<Group>* grids, st
 		rightTop.SetX(m_box.center_x());
 		rightTop.SetY(m_box.center_y() + m_box.h());
 	}
+	return true;
 }

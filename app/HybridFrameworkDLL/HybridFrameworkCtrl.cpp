@@ -3,6 +3,9 @@
 
 #include "HybridFrameworkCtrl.h"
 #include "CommonDef.h"
+#include<vcg/complex/complex.h>
+#include<vcg/complex/algorithms/update/topology.h>
+#include<vcg/complex/algorithms/update/bounding.h>
 #include <list>
 #include <map>
 
@@ -16,7 +19,7 @@ static const int ITER_REARRANGE = 10;
 static void integrate(HmAgent* ag, const float dt)
 {
 	// Fake dynamic constraint.
-	const float maxDelta = ag->params.maxAcceleration * dt;
+	const float maxDelta = ag->maxSpeed_;
 	float dv[3];
 	vecSub(dv, ag->nvel, ag->vel);
 	float ds = vecLen(dv);
@@ -105,8 +108,41 @@ int getNearestLog(int& num)
 	return ++n;
 }
 
+void LoadMesh(NavMesh& navMesh, int vn, float* verts, int fn, int* inds)	// vn = 1/3 * length(verts); fn = 1/3 * length(inds);
+{
+	NavMesh::VertexIterator vi = vcg::tri::Allocator<NavMesh>::AddVertices(navMesh, vn);
+	for (int i = 0; i < vn; i++) 
+	{
+		vi->P() = NavMesh::CoordType(verts[i * 3], verts[i * 3 + 1], verts[i * 3 + 2]);
+		vi->vertID = i;
+		vi++;
+	}
+	vcg::tri::Allocator<NavMesh>::AddFaces(navMesh, fn);
+	for (int i = 0; i < fn; i++)
+	{
+		int vid0 = inds[i * 3];
+		int vid1 = inds[i * 3 + 1];
+		int vid2 = inds[i * 3 + 2];
+		navMesh.face[i].V(0) = &navMesh.vert[vid0];
+		navMesh.face[i].V(1) = &navMesh.vert[vid1];
+		navMesh.face[i].V(2) = &navMesh.vert[vid2];
+		navMesh.face[i].faceID = i;
+		navMesh.face[i].CCID = 0;
+		navMesh.face[i].walkable = true;
+		navMesh.face[i].vertexIDs[0] = vid0;
+		navMesh.face[i].vertexIDs[1] = vid1;
+		navMesh.face[i].vertexIDs[2] = vid2;
+	}
+	vcg::tri::Allocator<NavMesh>::CompactFaceVector(navMesh);
+	vcg::tri::Allocator<NavMesh>::CompactVertexVector(navMesh);
+	vcg::tri::UpdateTopology<NavMesh>::VertexFace(navMesh);
+	vcg::tri::UpdateTopology<NavMesh>::FaceFace(navMesh);
+	vcg::tri::UpdateBounding<NavMesh>::Box(navMesh);
+}
+
+
 HybridFrameworkCtrl::HybridFrameworkCtrl() :m_agents(0), m_maxAgents(0), m_activeAgents(0)
-											, m_rvosim(0), m_fluidsim(0), m_maxGrids(0)
+, m_rvosim(0), m_fluidsim(0), m_maxGrids(0), m_nav(0), m_tileCtrl(0)
 											, m_groupRVOSim(0), m_obstacleRVOSim(0), m_groups(0)
 {
 
@@ -143,6 +179,12 @@ void HybridFrameworkCtrl::purge()
 	if (m_groups != 0)
 		delete m_groups;
 
+	if (m_tileCtrl != 0)
+		delete m_tileCtrl;
+
+	if (m_nav != 0)
+		delete m_nav;
+
 	m_groupRVOSim = 0;
 	m_obstacleRVOSim = 0;
 	m_rvosim = 0;
@@ -150,16 +192,30 @@ void HybridFrameworkCtrl::purge()
 
 }
 
-bool HybridFrameworkCtrl::init(const int maxAgents, const float maxAgentRadius, const float grid_size, const float ox, const float oy, const float ex, const float ey)
+bool HybridFrameworkCtrl::init(int maxAgents, float renderAgentRadius, float grid_size, int vn, float* verts, int fn, int* inds)
 {
 	purge();
 
 	m_maxAgents = maxAgents;
-	m_maxAgentRadius = maxAgentRadius;
-	m_groupsize = grid_size;	//真实比例
-	m_cellsize = (int)(grid_size / maxAgentRadius / 2);	//h
-	m_min[0] = ox;	m_min[1] = oy;	m_max[0] = ex;	m_max[1] = ey;
+	m_maxAgentRadius = renderAgentRadius;
+	m_gridsize = grid_size;	//真实比例
+	m_cellsize = (int)(grid_size / renderAgentRadius / 2);	//h
 
+	if (m_tileCtrl == 0) {
+		m_tileCtrl = new TileCtrl();
+	}
+	m_tileCtrl->ClearTiles();
+	if (m_nav == 0)
+	{
+		m_nav = new NavMesh();
+	}
+	else
+	{
+		m_nav->Clear();
+	}
+	LoadMesh(*m_nav, vn, verts, fn, inds);
+	m_tileCtrl->BuildTiles(m_nav, grid_size);
+	m_tileCtrl->BuildGrids(m_nav);
 	int groupNum = m_tileCtrl->m_grids.size();
 	m_groups = new std::vector < Group >;
 	(*m_groups).resize(groupNum);
@@ -172,8 +228,8 @@ bool HybridFrameworkCtrl::init(const int maxAgents, const float maxAgentRadius, 
 	m_obstacleRVOSim = new RVO::RVOSimulator();
 	agent_num = 0;
 	// (pi*r^2/2) / maxAgentRadius;
-	m_rvosim->setAgentDefaults(grid_size, PI*grid_size*grid_size / 8 / maxAgentRadius, 5.0f, grid_size*10.0f, maxAgentRadius, MAX_SPEED/*max speed*/);
-	m_groupRVOSim->setAgentDefaults(grid_size, PI*grid_size*grid_size / 8 / maxAgentRadius, 15.0f, 15.0f, maxAgentRadius, MAX_SPEED/*max speed*/);
+	m_rvosim->setAgentDefaults(grid_size, PI*grid_size*grid_size / 8 / renderAgentRadius, 5.0f, grid_size*10.0f, renderAgentRadius, MAX_SPEED/*max speed*/);
+	m_groupRVOSim->setAgentDefaults(grid_size, PI*grid_size*grid_size / 8 / renderAgentRadius, 15.0f, 15.0f, renderAgentRadius, MAX_SPEED/*max speed*/);
 	//m_obstacleRVOSim->setAgentDefaults(grid_size*10.0f, 0, 5.0f, grid_size*10.0f, maxAgentRadius*8.0f, MAX_SPEED/*max speed*/);
 	// Allocate temp buffer for merging paths.
 
@@ -192,11 +248,11 @@ bool HybridFrameworkCtrl::init(const int maxAgents, const float maxAgentRadius, 
 	}
 
 	//use navigation map to generate obstacles and grids
-	float m_width = ex - ox; //这里必须是能够被2^n整除的数
-	float m_height = ey - oy;
+	float m_width = m_nav->bbox.DimX(); //这里必须是能够被2^n整除的数
+	float m_height = m_nav->bbox.DimZ();
 	float mapsize = (m_width>m_height) ? m_width : m_height;
 
-	m_numofgridinrow = float(ceil(mapsize / grid_size));
+	m_numofgridinrow = int(ceil(mapsize / grid_size));
 	mapsize = m_numofgridinrow*grid_size;
 	for (unsigned int i = 0; i<m_groups->size(); i++)
 	{
@@ -218,22 +274,24 @@ const int HybridFrameworkCtrl::getAgentCount() const
 /// @par
 /// 
 /// Agents in the pool may not be in use.  Check #dtCrowdAgent.active before using the returned object.
-HmAgent* HybridFrameworkCtrl::getAgent(const int idx)
+HmAgent* HybridFrameworkCtrl::getAgent(int idx)
 {
 	return &m_agents[idx];
 }
 
-void HybridFrameworkCtrl::updateAgentParameters(const int idx, const dtCrowdAgentParams* params)
+void HybridFrameworkCtrl::updateAgentParameters(int idx, float maxNeighborDist, int maxNeighborNum, float planHorizon, float radius, float maxSpeed)
 {
 	if (idx < 0 || idx > m_maxAgents)
 		return;
-	memcpy(&m_agents[idx].params, params, sizeof(dtCrowdAgentParams));
+	m_agents[idx].setHmAgent(maxNeighborDist, maxNeighborNum, planHorizon, planHorizon, radius, maxSpeed);
 }
 
 /// @par
 ///
 /// The agent's position will be constrained to the surface of the navigation mesh.
-int HybridFrameworkCtrl::addAgent(const float* pos, const dtCrowdAgentParams* params, SimulationParams& simParams, float* target, float* vel, int color)
+int HybridFrameworkCtrl::addAgent(float* pos
+								, float maxNeighborDist, int maxNeighborNum, float planHorizon, float radius, float maxSpeed	// simulation parameters
+								, float* target, float* vel, int color)
 {
 	// Find empty slot.
 	int idx = -1;
@@ -250,17 +308,17 @@ int HybridFrameworkCtrl::addAgent(const float* pos, const dtCrowdAgentParams* pa
 		return -1;
 
 	HmAgent* ag = &m_agents[idx];
-
-	// Find nearest position on navmesh and place the agent there.
+	float nearest[3];
 	int tileID = -1;
 	int faceID = -1;
 	int gridID = -1;
+	// Find nearest position on navmesh and place the agent there.
+	bool res = GetNearestFace(pos, tileID, gridID, faceID, nearest);
 	ag->curGrid = gridID;
 	ag->curFace = faceID;
 	ag->curTile = tileID;
 	ag->color_id = color;
-	updateAgentParameters(idx, params);
-	ag->setHmAgent(simParams);
+	ag->setHmAgent(maxNeighborDist, maxNeighborNum, planHorizon, planHorizon, radius, maxSpeed);
 	if (vel != NULL)
 	{
 		vecSet(ag->dvel, vel[0], vel[1], vel[2]);
@@ -273,7 +331,7 @@ int HybridFrameworkCtrl::addAgent(const float* pos, const dtCrowdAgentParams* pa
 		vecSet(ag->nvel, 0, 0, 0);
 		vecSet(ag->vel, 0, 0, 0);
 	}
-	vecCopy(ag->npos, pos);
+	vecCopy(ag->npos, nearest);
 
 	ag->desiredSpeed = 0;
 
@@ -281,16 +339,10 @@ int HybridFrameworkCtrl::addAgent(const float* pos, const dtCrowdAgentParams* pa
 	
 	ag->active = 1;
 	ag->HmAgent_id = idx;
-	//Add Agent to Grid
 	if (gridID<0 || gridID>m_numofgridinrow*m_numofgridinrow){
 		ag->active = 0;
 		return -1;
 	}
-	ag->grid_now_id = gridID;
-	(*m_groups)[gridID].agentsInGroup.push_back(idx);
-	(*m_groups)[gridID].nowDensity = (*m_groups)[gridID].agentsInGroup.size()*1.0 / (m_cellsize*m_cellsize);
-	(*m_groups)[gridID].formerDensity = (*m_groups)[gridID].nowDensity;
-
 	return idx;
 }
 
@@ -321,7 +373,7 @@ int HybridFrameworkCtrl::getActiveAgents(HmAgent** agents, const int maxAgents)
 	return n;
 }
 
-void HybridFrameworkCtrl::update(const float dt)
+void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, float* positions, float* velocities)
 {
 	TimeVal startTime = getPerfTime();
 	m_rvosim->agents_.clear();
@@ -330,8 +382,7 @@ void HybridFrameworkCtrl::update(const float dt)
 	m_obstacleRVOSim->obstacles_.clear();
 
 	m_groupRVOSim->agents_.clear();
-	HmAgent** agents = m_activeAgents;
-	int nagents = getActiveAgents(agents, m_maxAgents);
+	
 	float agentSize = m_maxAgentRadius*m_maxAgentRadius * 4;
 	// Check that all agents still have valid paths.
 	//checkPathValidity(agents, nagents, dt);
@@ -345,42 +396,30 @@ void HybridFrameworkCtrl::update(const float dt)
 	}
 	// Calculate steering.
 	//printf("========================AGENT_INFO========================\n");
+	int nagents = agentNum;
 #pragma omp parallel for
-	for (int i = 0; i < nagents; ++i)
+	for (int i = 0; i < agentNum; ++i)
 	{
-		HmAgent* ag = agents[i];
-
-		if (ag->state != DT_CROWDAGENT_STATE_WALKING)
-			continue;
-		if (ag->targetState == DT_CROWDAGENT_TARGET_NONE)
-			continue;
+		HmAgent* ag = &m_agents[agentIds[i]];
+		ag->state = DT_CROWDAGENT_STATE_WALKING;
 		ag->is_contour = false;
-
+		ag->active = 1;
+		m_activeAgents[i] = ag;
 		float dvel[3] = { 0, 0, 0 };
+		dvel[0] = velocities[i * 3];
+		dvel[1] = velocities[i * 3 + 1];
+		dvel[2] = velocities[i * 3 + 2];
 
-		if (ag->targetState == DT_CROWDAGENT_TARGET_VELOCITY)
-		{
-			vecCopy(dvel, ag->targetPos);
-			ag->desiredSpeed = vecLen(ag->targetPos);
-		}
-		else
-		{
-			ag->corridor.GetSteerDir(ag->npos, dvel);
-
-			// Calculate speed scale, which tells the agent to slowdown at the end of the path.
-			const float slowDownRadius = ag->params.radius * 2;	// TODO: make less hacky.
-			const float speedScale = ag->corridor.GetDistanceToGoal(ag->npos, slowDownRadius) / slowDownRadius;
-
-			ag->desiredSpeed = ag->params.maxSpeed;
-			vecScale(dvel, dvel, ag->desiredSpeed * speedScale);
-		}
+		ag->npos[0] = positions[i * 3];
+		ag->npos[1] = positions[i * 3 + 1];
+		ag->npos[2] = positions[i * 3 + 2];
 		// Set the desired velocity.
 		vecCopy(ag->dvel, dvel);
 		ag->setHmAgent(ag->npos, ag->dvel);
 		(*m_groups)[ag->curGrid].agentsInGroup.push_back(ag->HmAgent_id);
-		//printf("%f %f %f %f %f %f %d\n", ag->npos[0], ag->npos[1], ag->npos[2], ag->dvel[0], ag->dvel[1], ag->dvel[2], ag->color_id);
-		//m_rvosim->agents_.push_back(ag);
 	}
+	HmAgent** agents = m_activeAgents;
+	
 	//m_densityThreshold = EPSILON;
 	for (int i = 0; i<m_maxGrids; i++)
 	{
@@ -413,7 +452,7 @@ void HybridFrameworkCtrl::update(const float dt)
 			std::vector<Vector2> obstacle = (*m_groups)[gid].m_box.GetCorners();
 			for (unsigned int k = 0; k<obstacle.size(); k++)
 				obstacle[k] = obstacle[k] + (*m_groups)[gid].avgVelocity * dt;
-			m_rvosim->addObstacle(obstacle, (*m_groups)[gid].nowDensity, (*m_groups)[gid].avgVelocity);
+			m_rvosim->addObstacle(obstacle, (float)(*m_groups)[gid].nowDensity, (*m_groups)[gid].avgVelocity);
 		}
 		/*
 		for (unsigned int j = 0; j < m_fluidgroups[i].contours.size(); j++)
@@ -433,11 +472,10 @@ void HybridFrameworkCtrl::update(const float dt)
 
 	// Integrate. and get new position
 #pragma omp parallel for
-	for (int i = 0; i < nagents; ++i)
+	for (int i = 0; i < agentNum; ++i)
 	{
-		HmAgent* ag = agents[i];
-		if (ag->state != DT_CROWDAGENT_STATE_WALKING)
-			continue;
+		HmAgent* ag = agents[agentIds[i]];
+		
 		ag->nvel[0] = float(ag->velocity_.x());
 		ag->nvel[1] = float(ag->dvel[1]);
 		ag->nvel[2] = float(ag->velocity_.y());
@@ -446,10 +484,25 @@ void HybridFrameworkCtrl::update(const float dt)
 			continue;
 		integrate(ag, dt);
 		ag->corridor.UpdateDir(ag->npos, float(ag->radius_));
-		float nearest[3];
 		int tileID = -1;
 		int faceID = -1;
 		int gridID = -1;
+		velocities[i * 3] = ag->nvel[0];
+		velocities[i * 3 + 1] = ag->nvel[1];
+		velocities[i * 3 + 2] = ag->nvel[2];
+
+		ag->corridor.UpdateDir(ag->npos, float(ag->radius_));	// so here, we should refresh the navigation part every N frames
+		float nearest[3];
+		bool res = GetNearestFace(ag->npos, tileID, gridID, faceID, nearest);
+		ag->curGrid = gridID;
+		ag->curFace = faceID;
+		ag->curTile = tileID;
+		vecCopy(ag->npos, nearest);
+
+		positions[i * 3] = ag->npos[0];
+		positions[i * 3 + 1] = ag->npos[1];
+		positions[i * 3 + 2] = ag->npos[2];
+
 	}
 	endTime = getPerfTime();
 	printf("Ajust Position Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
@@ -616,8 +669,8 @@ void HybridFrameworkCtrl::Rearrange()
 			}
 
 			elem_grid* agent_grids = (elem_grid*)malloc(people_num*sizeof(elem_grid));
-			int agentInRow = this->m_groupsize / m_maxAgentRadius / 2;
-			float elem_grid_size = this->m_groupsize / (1.0*agentInRow);
+			int agentInRow = this->m_gridsize / m_maxAgentRadius / 2;
+			float elem_grid_size = this->m_gridsize / (1.0*agentInRow);
 			// Assign parameters from each agent to the agent list used for sorting.
 			Vector2 mean_center(0, 0);
 			int agentCount = 0;
@@ -627,7 +680,7 @@ void HybridFrameworkCtrl::Rearrange()
 				int agent_id = (*m_groups)[gid].agentsInGroup[i];
 				agent_grids[i].center = Vector2(m_agents[agent_id].npos[0], m_agents[agent_id].npos[2]);
 				agent_grids[i].agent = &m_agents[agent_id];
-				agent_grids[i].radius = m_agents[agent_id].radius_;
+				agent_grids[i].radius = (float)m_agents[agent_id].radius_;
 				mean_center += agent_grids[i].center;
 				agentCount++;
 			}
@@ -638,13 +691,13 @@ void HybridFrameworkCtrl::Rearrange()
 				int nid = (*m_groups)[gid].m_neighbor[i];
 				if (nid < 0)
 					continue;
-				for (int j = 0; j<(*m_groups)[nid].agentsInGroup.size(); j++)
+				for (unsigned int j = 0; j<(*m_groups)[nid].agentsInGroup.size(); j++)
 				{
 					agent_grids[agentCount].id = agentCount;
 					int agent_id = (*m_groups)[nid].agentsInGroup[j];
 					agent_grids[agentCount].center = Vector2(m_agents[agent_id].npos[0], m_agents[agent_id].npos[2]);
 					agent_grids[agentCount].agent = &m_agents[agent_id];
-					agent_grids[agentCount].radius = m_agents[agent_id].radius_;
+					agent_grids[agentCount].radius = (float)m_agents[agent_id].radius_;
 					agentCount++;
 				}
 			}
@@ -698,11 +751,11 @@ void HybridFrameworkCtrl::Rearrange()
 				riter = agent_bucket[i].begin();
 				int midId = bucketSize / 2;
 				// set the pointers at middle point
-				for (int i = 0; i<midId; i++)
+				for (int j = 0; j<midId; j++)
 				{
 					riter++;
 				}
-				for (int i = midId + 1; i < bucketSize; i++)
+				for (int j = midId + 1; j < bucketSize; j++)
 				{
 					liter++;
 				}
@@ -785,3 +838,21 @@ void HybridFrameworkCtrl::save(FILE* fp)
 		fprintf(fp, "%f %f %f %f %f\n", ag->neighborDist_, ag->maxNeighbors_, ag->timeHorizon_, ag->radius_, ag->prefVelocity_);
 	}
 }
+
+bool HybridFrameworkCtrl::GetNearestFace(vcg::Point3f& pos, int& tileID, int& gridID, int& faceID, vcg::Point3f& nearestPos)
+{
+	Tile* tile = m_tileCtrl->GetTile(pos);
+	tileID = tile->m_tileID;
+	faceID = -1;
+	return tile->GetNearestFace(pos, gridID, faceID, m_nav, m_tileCtrl->m_grids, nearestPos);
+}
+
+bool HybridFrameworkCtrl::GetNearestFace(const float* pos, int& tileID, int& gridID, int& faceID, float* nearestPos)
+{
+	vcg::Point3f p(pos[0], pos[1], pos[2]);
+	vcg::Point3f n;
+	bool res = GetNearestFace(p, tileID, gridID, faceID, n);
+	nearestPos[0] = n.X();	nearestPos[1] = n.Y();	nearestPos[2] = n.Z();
+	return res;
+}
+

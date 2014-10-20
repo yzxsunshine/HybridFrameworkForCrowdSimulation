@@ -27,6 +27,16 @@ float ComputeTriArea(vcg::Point3f a, vcg::Point3f b, vcg::Point3f c)
 	return HelenArea(edgeA, edgeB, edgeC);
 }
 
+bool PtInTriangle(vcg::Point2f p, vcg::Point2f p0, vcg::Point2f p1, vcg::Point2f p2)
+{
+	float A = 1.0f / 2.0f * (-p1.Y() * p2.X() + p0.Y() * (-p1.X() + p2.X()) + p0.X() * (p1.Y() - p2.Y()) + p1.X() * p2.Y());
+	float sign = A < 0 ? -1 : 1;
+	float s = (p0.Y() * p2.X() - p0.X() * p2.Y() + (p2.Y() - p0.Y()) * p.X() + (p0.X() - p2.X()) * p.Y()) * sign;
+	float t = (p0.X() * p1.Y() - p0.Y() * p1.X() + (p0.Y() - p1.Y()) * p.X() + (p1.X() - p0.X()) * p.Y()) * sign;
+
+	return s > 0 && t > 0 && (s + t) < 2 * A * sign + EPSILON;
+}
+
 int GetPointSide(vcg::Point2f ptA, vcg::Point2f ptB, vcg::Point2f wayPt)
 {
 	vcg::Point2f normal = ptB - ptA;

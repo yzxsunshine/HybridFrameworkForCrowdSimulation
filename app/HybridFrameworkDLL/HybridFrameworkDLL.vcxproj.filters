@@ -25,11 +25,11 @@
     <Filter Include="HybridAlgorithm\gc">
       <UniqueIdentifier>{540ad8fd-cdb4-4a11-8070-76cf658b833e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="kbool">
+      <UniqueIdentifier>{d3f82c91-9480-4d0b-a1c5-b01ee79d9c86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HybridFrameworkCtrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -89,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="..\HybridModel\NavCorridor.cpp">
       <Filter>mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="HybridFrameworkAPI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="..\HybridModel\NavCorridor.h">
       <Filter>mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="HybridFrameworkAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\thirdparty\kbool\include\booleng.h">
+      <Filter>kbool</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
