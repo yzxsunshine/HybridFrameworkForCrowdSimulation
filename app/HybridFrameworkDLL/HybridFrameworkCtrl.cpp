@@ -142,8 +142,8 @@ void LoadMesh(NavMesh& navMesh, int vn, float* verts, int fn, int* inds)	// vn =
 
 
 HybridFrameworkCtrl::HybridFrameworkCtrl() :m_agents(0), m_maxAgents(0), m_activeAgents(0)
-, m_rvosim(0), m_fluidsim(0), m_maxGrids(0), m_nav(0), m_tileCtrl(0)
-											, m_groupRVOSim(0), m_obstacleRVOSim(0), m_groups(0)
+											, m_rvosim(0), m_fluidsim(0), m_maxGrids(0), m_nav(0), m_tileCtrl(0)
+											, m_groupRVOSim(0), m_groups(0), m_densityThreshold(0.3)
 {
 
 }
@@ -161,33 +161,39 @@ void HybridFrameworkCtrl::purge()
 	m_agents = 0;
 	m_maxAgents = 0;
 
-	if (m_activeAgents != 0)
-		free(m_activeAgents);
-	m_activeAgents = 0;
-
 	if (m_fluidsim != 0)
 		delete m_fluidsim;
 	m_fluidsim = 0;
 
-	if (m_rvosim != 0)
+	if (m_rvosim != 0) {
+		m_rvosim->agents_.clear();
 		delete m_rvosim;
+	}
+	m_rvosim = 0;
+
 	if (m_groupRVOSim != 0)
 		delete m_groupRVOSim;
-	if (m_obstacleRVOSim != 0)
-		delete m_obstacleRVOSim;
+	m_groupRVOSim = 0;
 
 	if (m_groups != 0)
 		delete m_groups;
+	m_groups = 0;
 
 	if (m_tileCtrl != 0)
 		delete m_tileCtrl;
+	m_tileCtrl = 0;
 
 	if (m_nav != 0)
 		delete m_nav;
+	m_nav = 0;
 
-	m_groupRVOSim = 0;
-	m_obstacleRVOSim = 0;
-	m_rvosim = 0;
+	if (m_activeAgents != 0)
+		free(m_activeAgents);
+	m_activeAgents = 0;
+
+	
+	
+	
 	m_maxGrids = 0;
 
 }
@@ -225,12 +231,10 @@ bool HybridFrameworkCtrl::init(int maxAgents, float renderAgentRadius, float gri
 	}
 	m_rvosim = new RVO::RVOSimulator();
 	m_groupRVOSim = new RVO::RVOSimulator();
-	m_obstacleRVOSim = new RVO::RVOSimulator();
 	agent_num = 0;
 	// (pi*r^2/2) / maxAgentRadius;
 	m_rvosim->setAgentDefaults(grid_size, PI*grid_size*grid_size / 8 / renderAgentRadius, 5.0f, grid_size*10.0f, renderAgentRadius, MAX_SPEED/*max speed*/);
 	m_groupRVOSim->setAgentDefaults(grid_size, PI*grid_size*grid_size / 8 / renderAgentRadius, 15.0f, 15.0f, renderAgentRadius, MAX_SPEED/*max speed*/);
-	//m_obstacleRVOSim->setAgentDefaults(grid_size*10.0f, 0, 5.0f, grid_size*10.0f, maxAgentRadius*8.0f, MAX_SPEED/*max speed*/);
 	// Allocate temp buffer for merging paths.
 
 	//Initialize Agents
@@ -378,9 +382,7 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 	TimeVal startTime = getPerfTime();
 	m_rvosim->agents_.clear();
 	m_rvosim->obstacles_.clear();
-	m_obstacleRVOSim->agents_.clear();
-	m_obstacleRVOSim->obstacles_.clear();
-
+	
 	m_groupRVOSim->agents_.clear();
 	
 	float agentSize = m_maxAgentRadius*m_maxAgentRadius * 4;
@@ -483,7 +485,7 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 		if (ag->state != DT_CROWDAGENT_STATE_WALKING)
 			continue;
 		integrate(ag, dt);
-		ag->corridor.UpdateDir(ag->npos, float(ag->radius_));
+		//ag->corridor.UpdateDir(ag->npos, float(ag->radius_));
 		int tileID = -1;
 		int faceID = -1;
 		int gridID = -1;
@@ -491,7 +493,7 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 		velocities[i * 3 + 1] = ag->nvel[1];
 		velocities[i * 3 + 2] = ag->nvel[2];
 
-		ag->corridor.UpdateDir(ag->npos, float(ag->radius_));	// so here, we should refresh the navigation part every N frames
+		//ag->corridor.UpdateDir(ag->npos, float(ag->radius_));	// so here, we should refresh the navigation part every N frames
 		float nearest[3];
 		bool res = GetNearestFace(ag->npos, tileID, gridID, faceID, nearest);
 		ag->curGrid = gridID;
@@ -553,7 +555,6 @@ void HybridFrameworkCtrl::MergeGrid()
 				{
 					m_agents[*it].active = 2;
 					m_rvosim->agents_.push_back(&m_agents[*it]);
-					m_obstacleRVOSim->agents_.push_back(&m_agents[*it]);
 				}
 			}
 			else
@@ -561,7 +562,6 @@ void HybridFrameworkCtrl::MergeGrid()
 				m_agents[*it].density = 0;
 				m_agents[*it].active = 2;
 				m_rvosim->agents_.push_back(&m_agents[*it]);
-				m_obstacleRVOSim->agents_.push_back(&m_agents[*it]);
 			}
 		}
 		if (hasDense)

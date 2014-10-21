@@ -229,8 +229,10 @@ int TileCtrl::BuildTiles(NavMesh* nav, float tileSize)
 				}
 				sumArea += curPt[0] * firstPt[1] - firstPt[0] * curPt[1];
 				sumArea = abs(sumArea / 2);
-				m_tiles[r][c].m_faces.push_back(i);
-				m_tiles[r][c].m_faceArea.push_back(sumArea);
+				if (sumArea > EPSILON) {
+					m_tiles[r][c].m_faces.push_back(i);
+					m_tiles[r][c].m_faceArea.push_back(sumArea);
+				}
 				delete booleng;
 			}
 		}

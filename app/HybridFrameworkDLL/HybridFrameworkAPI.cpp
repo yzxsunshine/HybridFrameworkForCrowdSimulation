@@ -41,3 +41,7 @@ void clear()
 {
 	ctrl.purge();
 }
+
+void setDensityThreshold(float thresh) {
+	ctrl.SetDensityThreshold(thresh);
+}

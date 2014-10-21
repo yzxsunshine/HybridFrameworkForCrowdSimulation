@@ -34,7 +34,6 @@ public:
 	TileCtrl* m_tileCtrl;
 
 	RVO::RVOSimulator* m_rvosim;	// agent agent rvo
-	RVO::RVOSimulator* m_obstacleRVOSim;	// group group rvo
 	RVO::RVOSimulator* m_groupRVOSim;	// agent group rvo
 	FluidSimulator* m_fluidsim;
 

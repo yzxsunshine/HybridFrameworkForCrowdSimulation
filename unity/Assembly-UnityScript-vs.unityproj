@@ -47,7 +47,21 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Materials\codes\FloorTex.js" />
+     <Compile Include="Assets\Materials\codes\FlyCam.js" />
+     <None Include="Assets\test\agent_group_lowpc1.txt" />
+     <None Include="Assets\test\agent_group_lowpc2.txt" />
+     <None Include="Assets\test\four_corner.txt" />
+     <None Include="Assets\test\group_group_samepc.txt" />
+     <None Include="Assets\test\agent_group_highpc1.txt" />
      <None Include="Assets\Raw Mocap Data\Animations\_CompleteAnimationList.txt" />
+     <None Include="Assets\test\group_group.txt" />
+ <Reference Include="Assembly-UnityScript-firstpass">
+ <HintPath>C:/Work/Paper_Project/Mine/HybridFramework/HybridFrameworkForCrowdSimulation/unity/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{518622B2-9050-A153-E465-3E4BD155181A}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

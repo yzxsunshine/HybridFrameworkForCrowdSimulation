@@ -23,6 +23,33 @@ void Tile::Init(vcg::Point2f leftTop, int tileID, float size)
 
 void Tile::BuildGrids(NavMesh* nav, std::vector<Grid>& grids)
 {
+	int startID = grids.size();
+	// initialize the first grid
+	Grid grid;
+	grid.gridID = startID;
+	
+	grid.tileID = m_tileID;
+	grid.m_area = 0;
+	vcg::Point3f center(0, 0, 0);
+	int faceNum = m_faces.size();
+	for (int i = 0; i < faceNum; i++) {
+		grid.m_faces.push_back(m_faces[i]);
+		grid.m_area += m_faceArea[i];
+		int fid = grid.m_faces[i];
+		center += nav->face[fid].V(0)->P();
+		center += nav->face[fid].V(1)->P();
+		center += nav->face[fid].V(2)->P();
+	}
+	grid.m_group.init(startID, grid.m_area);
+	grid.m_group.m_box = m_box;
+	float pos[3], nearest[3];
+	center = center / 3 / faceNum;
+	pos[0] = center.X();	pos[1] = center.Y();	pos[2] = center.Z();
+	grid.GetNearestFace(pos, grid.centerFace, nav, grids, nearest);
+	grid.center = vcg::Point3f(nearest[0], nearest[1], nearest[2]);
+	grids.push_back(grid);
+	m_gridIds.push_back(grid.gridID);
+	/*
 	int faceNum = m_faces.size();
 	if(faceNum <= 0)
 		return;
@@ -154,10 +181,23 @@ void Tile::BuildGrids(NavMesh* nav, std::vector<Grid>& grids)
 		grids[m_gridIds[i]].GetNearestFace(pos, grids[m_gridIds[i]].centerFace, nav, grids, nearest);
 		grids[m_gridIds[i]].center = vcg::Point3f(nearest[0], nearest[1], nearest[2]);
 	}
+	*/
 }
 
 void Tile::BuildGridNeighbor(NavMesh* nav, std::vector<Grid>& grids)
 {
+	// right now, it's a very simple implementation just based on the 2d plane ground
+	for (int i = 0; i < 4; i++)
+	{
+		if (m_neighbor[i] != NULL) {
+			grids[m_gridIds[0]].m_group.m_neighbor[i] = m_neighbor[i]->m_gridIds[0];
+		}
+		else {
+			grids[m_gridIds[0]].m_group.m_neighbor[i] = -1;
+		}
+	}
+	
+	/*
 	std::vector<std::map<int, int>> gridFaceNeighborIdDict;
 	int gridNum = m_gridIds.size();
 	gridFaceNeighborIdDict.resize(gridNum);
@@ -203,6 +243,7 @@ void Tile::BuildGridNeighbor(NavMesh* nav, std::vector<Grid>& grids)
 			}
 		}
 	}
+	*/
 }
 
 bool Tile::GetNearestFace(vcg::Point3f& pos, int& gridID, int& faceID, NavMesh* nav, std::vector<Grid>& grids, vcg::Point3f& nearestPos)

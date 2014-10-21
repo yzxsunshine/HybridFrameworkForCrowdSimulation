@@ -21,3 +21,5 @@ void removeAgent(int idx);
 void update(float dt, int agentNum, int* agentIds, float* positions, float* velocities);
 
 void clear();
+
+void setDensityThreshold(float thresh);

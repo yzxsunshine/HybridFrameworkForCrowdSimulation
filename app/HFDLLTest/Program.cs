@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace HFDLLTest
 {
@@ -37,8 +38,12 @@ namespace HFDLLTest
         [DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
 	    private static extern void Clear();
 
+        [DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void SetDensityThreshold(float thresh);
+
         static void Main(string[] args)
         {
+            /*
             int vn = 4;
             float[] verts = new float[vn*3];
             verts[0] = -4.0f;   verts[1] = 0.0f;    verts[2] = -4.0f;
@@ -49,22 +54,86 @@ namespace HFDLLTest
             int[] inds = new int[fn*3];
             inds[0] = 0;    inds[1] = 1;    inds[2] = 3;
             inds[3] = 3;    inds[4] = 1;    inds[5] = 2;
+            */
+            StreamReader sr = new StreamReader(@"../debug.txt");
+            string line;
+            line = sr.ReadLine();   // it's not safe to directly read, but as we only need to test this one time.. so be it
+            int vn = Convert.ToInt32(line);
+            float[] verts = new float[vn * 3];
+            for (int i = 0; i < vn * 3; i++)
+            {
+                line = sr.ReadLine();
+                verts[i] = (float)Convert.ToDouble(line);
+            }
+            line = sr.ReadLine();
+            int fn = Convert.ToInt32(line);
+            int[] inds = new int[fn * 3];
+            for (int i = 0; i < fn * 3; i++)
+            {
+                line = sr.ReadLine();
+                inds[i] = Convert.ToInt32(line);
+            }
             float renderRadius = 0.5f;
-            int maxAgentNum = 100;
-            float gridSize = 4.0f;
+            int maxAgentNum = 1000;
+            float gridSize = 20.0f;
             Init(maxAgentNum, renderRadius, gridSize, vn, verts, fn, inds);
+           
+           
+            StreamReader sr2 = new StreamReader(@"../Tests/group_group.txt");
+            while ((line = sr2.ReadLine()) != null)
+            {
+                string[] parse = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parse.Length == 12)
+                {
+                    float[] pos = new float[3];
+                    float[] vel = new float[3];
+                    float[] target = new float[3];
+                    pos[0] = (float)Convert.ToDouble(parse[0]); pos[1] = (float)Convert.ToDouble(parse[1]); pos[2] = (float)Convert.ToDouble(parse[2]);
+                    vel[0] = 0; vel[1] = 0; vel[2] = 0;
+                    target[0] = (float)Convert.ToDouble(parse[3]); target[1] = (float)Convert.ToDouble(parse[4]); target[2] = (float)Convert.ToDouble(parse[5]);
 
-            float[] pos = new float[3];
-            pos[0] = 0.0f; pos[1] = 0.0f; pos[2] = 0.0f;
-            float[] target = new float[3];
-            target[0] = 1.0f; target[1] = 1.0f; target[2] = 1.0f;
-            float[] vel = new float[3];
-            vel[0] = 0.1f; vel[1] = 0.1f; vel[2] = 0.1f;
-            AddAgent(pos, 2.0f, 10, 5.0f, 0.2f, 1.0f, target, vel, 0);
+                    int color = Convert.ToInt32(parse[6]);
 
-            int[] ids = new int[1];
-            ids[0] = 0;
-            Update(0.033f, 1, ids, pos, vel);
+                    float maxNeighborDist = (float)Convert.ToDouble(parse[7]);
+                    int maxNeighborNum = Convert.ToInt32(parse[8]);
+                    float planHorizon = (float)Convert.ToDouble(parse[9]);
+                    float radius = (float)Convert.ToDouble(parse[10]);	// thi is the comfort radius
+                    float maxSpeed = (float)Convert.ToDouble(parse[11]);
+
+                    AddAgent(pos, maxNeighborDist, maxNeighborNum, planHorizon, radius, maxSpeed, target, vel, color);
+                }
+            }
+            int count = 0;
+            StreamReader sr3 = new StreamReader(@"../update.txt");
+            line = sr3.ReadLine();
+            float dt = (float)Convert.ToDouble(line);
+            line = sr3.ReadLine();
+            int agentNum = Convert.ToInt32(line);
+            int[] ids = new int[agentNum];
+            float[] poss = new float[3 * agentNum];
+            float[] vels = new float[3 * agentNum];
+            for (int i = 0; i < agentNum; i++)
+            {
+                line = sr3.ReadLine();
+                ids[i] = Convert.ToInt32(line);
+
+                line = sr3.ReadLine();
+                poss[i * 3] = (float)Convert.ToDouble(line);
+                line = sr3.ReadLine();
+                poss[i * 3 + 1] = (float)Convert.ToDouble(line);
+                line = sr3.ReadLine();
+                poss[i * 3 + 2] = (float)Convert.ToDouble(line);
+
+                line = sr3.ReadLine();
+                vels[i * 3] = (float)Convert.ToDouble(line);
+                line = sr3.ReadLine();
+                vels[i * 3 + 1] = (float)Convert.ToDouble(line);
+                line = sr3.ReadLine();
+                vels[i * 3 + 2] = (float)Convert.ToDouble(line);
+            }
+            Update(dt, agentNum, ids, poss, vels);
+            count++;
+            Clear();
         }
     }
 }
