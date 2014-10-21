@@ -52,6 +52,7 @@
      <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonCamera.js" />
      <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\ThirdPersonController.js" />
      <None Include="Assets\test\agent_group_lowpc1.txt" />
+     <None Include="Assets\test\logo.txt" />
      <None Include="Assets\test\agent_group_lowpc2.txt" />
      <None Include="Assets\test\four_corner.txt" />
      <None Include="Assets\test\group_group_samepc.txt" />

@@ -23,3 +23,5 @@ void update(float dt, int agentNum, int* agentIds, float* positions, float* velo
 void clear();
 
 void setDensityThreshold(float thresh);
+
+void setAgentCorridor(int aid, int cornerNum, float* corners);

@@ -87,6 +87,8 @@ public:
 		RVO::Agent::SetDensity(thresh, 1.0f);
 	}
 
+	void SetAgentCorridor(int aid, int cornerNum, float* corners);
+
 	bool GetNearestFace(vcg::Point3f& pos, int& tileID, int& gridID, int& faceID, vcg::Point3f& nearestPos);
 	bool GetNearestFace(const float* pos, int& tileID, int& gridID, int& faceID, float* nearestPos);
 };

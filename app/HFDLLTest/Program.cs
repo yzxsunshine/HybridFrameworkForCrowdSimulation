@@ -41,6 +41,9 @@ namespace HFDLLTest
         [DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
         private static extern void SetDensityThreshold(float thresh);
 
+        [DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void SetAgentCorridor(int aid, int cornerNum, float[] corners);
+
         static void Main(string[] args)
         {
             /*
@@ -77,9 +80,10 @@ namespace HFDLLTest
             int maxAgentNum = 1000;
             float gridSize = 20.0f;
             Init(maxAgentNum, renderRadius, gridSize, vn, verts, fn, inds);
+            sr.Close();
            
-           
-            StreamReader sr2 = new StreamReader(@"../Tests/group_group.txt");
+            StreamReader sr2 = new StreamReader(@"../Tests/logo.txt");
+            int aidCount = 0;
             while ((line = sr2.ReadLine()) != null)
             {
                 string[] parse = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -101,8 +105,35 @@ namespace HFDLLTest
                     float maxSpeed = (float)Convert.ToDouble(parse[11]);
 
                     AddAgent(pos, maxNeighborDist, maxNeighborNum, planHorizon, radius, maxSpeed, target, vel, color);
+                    aidCount++;
                 }
             }
+            sr2.Close();
+
+            StreamReader sr4 = new StreamReader(@"../corners.txt");
+            int aidSum = aidCount;
+            aidCount = 0;
+            for (aidCount = 0; aidCount < aidSum; aidCount++)
+            {
+                int cornerNum;
+                line = sr4.ReadLine();
+                cornerNum = Convert.ToInt32(line);
+                float[] corners = new float[3 * cornerNum];
+                for (int i = 0; i < cornerNum; i++)
+                {
+                    line = sr4.ReadLine();
+                    corners[i * 3 + 0] = (float)Convert.ToDouble(line);
+                    line = sr4.ReadLine();
+                    corners[i * 3 + 1] = (float)Convert.ToDouble(line);
+                    line = sr4.ReadLine();
+                    corners[i * 3 + 2] = (float)Convert.ToDouble(line);
+                }
+                    
+
+                SetAgentCorridor(aidCount, cornerNum, corners);
+            }
+            sr4.Close();
+
             int count = 0;
             StreamReader sr3 = new StreamReader(@"../update.txt");
             line = sr3.ReadLine();
@@ -131,8 +162,12 @@ namespace HFDLLTest
                 line = sr3.ReadLine();
                 vels[i * 3 + 2] = (float)Convert.ToDouble(line);
             }
-            Update(dt, agentNum, ids, poss, vels);
-            count++;
+            sr3.Close();
+            while (count < 500)
+            { 
+                Update(dt, agentNum, ids, poss, vels);
+                count++;
+            }
             Clear();
         }
     }

@@ -45,3 +45,8 @@ void clear()
 void setDensityThreshold(float thresh) {
 	ctrl.SetDensityThreshold(thresh);
 }
+
+void setAgentCorridor(int aid, int cornerNum, float* corners)
+{
+	ctrl.SetAgentCorridor(aid, cornerNum, corners);
+}

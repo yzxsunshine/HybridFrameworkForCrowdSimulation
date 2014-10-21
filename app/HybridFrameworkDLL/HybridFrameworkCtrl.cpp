@@ -287,7 +287,7 @@ void HybridFrameworkCtrl::updateAgentParameters(int idx, float maxNeighborDist, 
 {
 	if (idx < 0 || idx > m_maxAgents)
 		return;
-	m_agents[idx].setHmAgent(maxNeighborDist, maxNeighborNum, planHorizon, planHorizon, radius, maxSpeed);
+	m_agents[idx].setHmAgent(maxNeighborDist, maxNeighborNum, planHorizon, planHorizon + m_gridsize, radius, maxSpeed);
 }
 
 /// @par
@@ -322,7 +322,7 @@ int HybridFrameworkCtrl::addAgent(float* pos
 	ag->curFace = faceID;
 	ag->curTile = tileID;
 	ag->color_id = color;
-	ag->setHmAgent(maxNeighborDist, maxNeighborNum, planHorizon, planHorizon, radius, maxSpeed);
+	ag->setHmAgent(maxNeighborDist, maxNeighborNum, planHorizon, planHorizon+m_gridsize, radius, maxSpeed);
 	if (vel != NULL)
 	{
 		vecSet(ag->dvel, vel[0], vel[1], vel[2]);
@@ -377,6 +377,8 @@ int HybridFrameworkCtrl::getActiveAgents(HmAgent** agents, const int maxAgents)
 	return n;
 }
 
+#include <fstream>
+
 void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, float* positions, float* velocities)
 {
 	TimeVal startTime = getPerfTime();
@@ -399,6 +401,7 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 	// Calculate steering.
 	//printf("========================AGENT_INFO========================\n");
 	int nagents = agentNum;
+	//std::ofstream ofs("loglog.txt");
 #pragma omp parallel for
 	for (int i = 0; i < agentNum; ++i)
 	{
@@ -408,10 +411,17 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 		ag->active = 1;
 		m_activeAgents[i] = ag;
 		float dvel[3] = { 0, 0, 0 };
-		dvel[0] = velocities[i * 3];
-		dvel[1] = velocities[i * 3 + 1];
-		dvel[2] = velocities[i * 3 + 2];
-
+		ag->corridor.GetSteerDir(ag->npos, dvel);
+		std::cout << "dvel:" << " " << dvel[0] << " " << dvel[1] << " " << dvel[2] << std::endl;
+		vcg::Point3f pt = ag->corridor.pts.front();
+		std::cout << "corner size: " << ag->corridor.pts.size() << " " << pt.X() << " " << pt.Y() << " " << pt.Z() << std::endl;
+		// Calculate speed scale, which tells the agent to slowdown at the end of the path.
+		const float slowDownRadius = ag->radius_ * 2;	// TODO: make less hacky.
+		const float speedScale = ag->corridor.GetDistanceToGoal(ag->npos, slowDownRadius) / slowDownRadius;
+		
+		ag->desiredSpeed = ag->maxSpeed_;
+		vecScale(dvel, dvel, ag->desiredSpeed * speedScale);
+		std::cout << "slowDownRadius: " << slowDownRadius << "speedScale: " << speedScale << "dvel:" << " " << dvel[0] << " " << dvel[1] << " " << dvel[2] << std::endl;
 		ag->npos[0] = positions[i * 3];
 		ag->npos[1] = positions[i * 3 + 1];
 		ag->npos[2] = positions[i * 3 + 2];
@@ -430,11 +440,11 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 	}
 	//
 	TimeVal endTime = getPerfTime();
-	printf("NavMesh Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	std::printf("NavMesh Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
 	startTime = getPerfTime();
 	MergeGrid();
 	endTime = getPerfTime();
-	printf("Merge Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	std::printf("Merge Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
 	startTime = getPerfTime();
 
 	m_fluidsim->doStep();
@@ -443,12 +453,12 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 		Rearrange();
 	}
 	endTime = getPerfTime();
-	printf("Fluid Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	std::printf("Fluid Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
 	startTime = getPerfTime();
 	for (unsigned int i = 0; i<m_densegroups.size(); i++)
 	{
 
-		for (unsigned int j = 0; j < m_densegroups[i].crowdGroup.size(); j++)
+		/*for (unsigned int j = 0; j < m_densegroups[i].crowdGroup.size(); j++)
 		{
 			int gid = m_densegroups[i].crowdGroup[j];
 			std::vector<Vector2> obstacle = (*m_groups)[gid].m_box.GetCorners();
@@ -456,20 +466,20 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 				obstacle[k] = obstacle[k] + (*m_groups)[gid].avgVelocity * dt;
 			m_rvosim->addObstacle(obstacle, (float)(*m_groups)[gid].nowDensity, (*m_groups)[gid].avgVelocity);
 		}
-		/*
-		for (unsigned int j = 0; j < m_fluidgroups[i].contours.size(); j++)
+		*/
+		for (unsigned int j = 0; j < m_densegroups[i].contours.size(); j++)
 		{
-		std::vector<Vector2> obstacle = m_fluidgroups[i].contours[j];
-		for (unsigned int k = 0; k<obstacle.size(); k++)
-		obstacle[k] = obstacle[k] + m_fluidgroups[i].avgVel * dt;
-		m_rvosim->addObstacle(obstacle, m_fluidgroups[i].avgDensity, m_fluidgroups[i].avgVel);
-		}*/
+			std::vector<Vector2> obstacle = m_densegroups[i].contours[j];
+			for (unsigned int k = 0; k<obstacle.size(); k++)
+				obstacle[k] = obstacle[k] + m_densegroups[i].avgVel * dt;
+			m_rvosim->addObstacle(obstacle, m_densegroups[i].avgDensity, m_densegroups[i].avgVel);
+		}
 	}
 
 	m_rvosim->processObstacles();
 	m_rvosim->doStep();
 	endTime = getPerfTime();
-	printf("RVO Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	std::printf("RVO Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
 	startTime = getPerfTime();
 
 	// Integrate. and get new position
@@ -485,14 +495,15 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 		if (ag->state != DT_CROWDAGENT_STATE_WALKING)
 			continue;
 		integrate(ag, dt);
-		//ag->corridor.UpdateDir(ag->npos, float(ag->radius_));
+		std::cout << "nvel:" << " " << ag->nvel[0] << " " << ag->nvel[1] << " " << ag->nvel[2] << std::endl;
+		ag->corridor.UpdateDir(ag->npos, float(ag->radius_));
 		int tileID = -1;
 		int faceID = -1;
 		int gridID = -1;
 		velocities[i * 3] = ag->nvel[0];
 		velocities[i * 3 + 1] = ag->nvel[1];
 		velocities[i * 3 + 2] = ag->nvel[2];
-
+		std::cout << "nvel:" << " " << ag->nvel[0] << " " << ag->nvel[1] << " " << ag->nvel[2] << std::endl;
 		//ag->corridor.UpdateDir(ag->npos, float(ag->radius_));	// so here, we should refresh the navigation part every N frames
 		float nearest[3];
 		bool res = GetNearestFace(ag->npos, tileID, gridID, faceID, nearest);
@@ -506,8 +517,9 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 		positions[i * 3 + 2] = ag->npos[2];
 
 	}
+	//ofs.close();
 	endTime = getPerfTime();
-	printf("Ajust Position Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	std::printf("Ajust Position Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
 }
 
 void HybridFrameworkCtrl::MergeGrid()
@@ -837,6 +849,19 @@ void HybridFrameworkCtrl::save(FILE* fp)
 		fprintf(fp, "%f %f %f %f %f %f %d ", ag->npos[0], ag->npos[1], ag->npos[2], ag->targetPos[0], ag->targetPos[1], ag->targetPos[2], ag->color_id);
 		fprintf(fp, "%f %f %f %f %f\n", ag->neighborDist_, ag->maxNeighbors_, ag->timeHorizon_, ag->radius_, ag->prefVelocity_);
 	}
+}
+
+void HybridFrameworkCtrl::SetAgentCorridor(int aid, int cornerNum, float* corners)
+{
+	std::vector<vcg::Point3f> pathPts;
+	pathPts.resize(cornerNum);
+	for (int i = 0; i < cornerNum; i++)
+	{
+		pathPts[i].X() = corners[i * 3];
+		pathPts[i].Y() = corners[i * 3 + 1];
+		pathPts[i].Z() = corners[i * 3 + 2];
+	}
+	m_agents[aid].corridor.SetCorridor(pathPts);
 }
 
 bool HybridFrameworkCtrl::GetNearestFace(vcg::Point3f& pos, int& tileID, int& gridID, int& faceID, vcg::Point3f& nearestPos)

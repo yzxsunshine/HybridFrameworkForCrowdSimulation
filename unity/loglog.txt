@@ -1,0 +1,1000 @@
+dvel: 0.791481 0 -0.611194
+corner size: 1 10.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.316592 0 -0.244478
+dvel: 0.830793 0 -0.556581
+corner size: 1 10.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.332317 0 -0.222633
+dvel: 0.832197 0 -0.554481
+corner size: 1 10.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.332879 0 -0.221792
+dvel: 0.830545 0 -0.556952
+corner size: 1 10.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.332218 0 -0.222781
+dvel: 0.834528 0 -0.550966
+corner size: 1 10.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333811 0 -0.220386
+dvel: 0.834952 0 -0.550323
+corner size: 1 10.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333981 0 -0.220129
+dvel: 0.8324 0 -0.554176
+corner size: 1 10.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.33296 0 -0.22167
+dvel: 0.832021 0 -0.554744
+corner size: 1 10.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.332808 0 -0.221897
+dvel: 0.826954 0 -0.56227
+corner size: 1 10.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.330781 0 -0.224908
+dvel: 0.255115 0 -0.966911
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: 0.102046 0 -0.386764
+dvel: 0.767304 0 -0.641283
+corner size: 1 14.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.306922 0 -0.256513
+dvel: 0.83458 0 -0.550886
+corner size: 1 14.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333832 0 -0.220355
+dvel: 0.832611 0 -0.553858
+corner size: 1 14.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333045 0 -0.221543
+dvel: 0.831251 0 -0.555897
+corner size: 1 14.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.332501 0 -0.222359
+dvel: 0.8131 0 -0.582124
+corner size: 1 14.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.32524 0 -0.232849
+dvel: 0.831756 0 -0.555141
+corner size: 1 14.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.332702 0 -0.222056
+dvel: 0.815621 0 -0.578587
+corner size: 1 14.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.326248 0 -0.231435
+dvel: 0.836837 0 -0.547453
+corner size: 1 14.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.334735 0 -0.218981
+dvel: 0.826694 0 -0.562652
+corner size: 1 14.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.330677 0 -0.225061
+dvel: 0.834731 0 -0.550657
+corner size: 1 14.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333893 0 -0.220263
+dvel: 0.764984 0 -0.64405
+corner size: 1 18.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.305993 0 -0.25762
+dvel: 0.834665 0 -0.550758
+corner size: 1 18.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333866 0 -0.220303
+dvel: 0.791677 0 -0.61094
+corner size: 1 18.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.316671 0 -0.244376
+dvel: 0.828442 0 -0.560074
+corner size: 1 18.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.331377 0 -0.22403
+dvel: 0.817738 0 -0.575591
+corner size: 1 18.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.327095 0 -0.230236
+dvel: 0.829426 0 -0.558617
+corner size: 1 18.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.33177 0 -0.223447
+dvel: 0.0141449 0 -0.9999
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: 0.00565798 0 -0.39996
+dvel: 0.83933 0 -0.543621
+corner size: 1 18.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.335732 0 -0.217449
+dvel: 0.83636 0 -0.548181
+corner size: 1 18.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.334544 0 -0.219272
+dvel: 0.834835 0 -0.550501
+corner size: 1 18.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333934 0 -0.2202
+dvel: 0.764638 0 -0.64446
+corner size: 1 22.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.305855 0 -0.257784
+dvel: 0.773009 0 -0.634395
+corner size: 1 22.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.309204 0 -0.253758
+dvel: 0.78117 0 -0.624318
+corner size: 1 22.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.312468 0 -0.249727
+dvel: 0.810091 0 -0.586305
+corner size: 1 22.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.324036 0 -0.234522
+dvel: -0.0445103 0 -0.999009
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.0178041 0 -0.399604
+dvel: -0.0495674 0 -0.998771
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.019827 0 -0.399508
+dvel: 0.855802 0 -0.517303
+corner size: 1 22.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.342321 0 -0.206921
+dvel: 0.859708 0 -0.510786
+corner size: 1 22.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.343883 0 -0.204314
+dvel: 0.83782 0 -0.545947
+corner size: 1 22.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.335128 0 -0.218379
+dvel: 0.834722 0 -0.550672
+corner size: 1 22.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333889 0 -0.220269
+dvel: 0.764624 0 -0.644477
+corner size: 1 26.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.30585 0 -0.257791
+dvel: 0.781047 0 -0.624473
+corner size: 1 26.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.312419 0 -0.249789
+dvel: -0.0447425 0 -0.998999
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.017897 0 -0.399599
+dvel: -0.061138 0 -0.998129
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.0244552 0 -0.399252
+dvel: -0.0842393 0 -0.996446
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.0336957 0 -0.398578
+dvel: 0.855785 0 -0.517331
+corner size: 1 26.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.342314 0 -0.206932
+dvel: 0.840048 0 -0.542511
+corner size: 1 26.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.336019 0 -0.217005
+dvel: 0.800048 0 -0.599936
+corner size: 1 26.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.320019 0 -0.239974
+dvel: 0.827027 0 -0.562162
+corner size: 1 26.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.330811 0 -0.224865
+dvel: 0.834706 0 -0.550696
+corner size: 1 26.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333882 0 -0.220278
+dvel: 0.0149456 0 -0.999888
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: 0.00597825 0 -0.399955
+dvel: -0.00924287 0 -0.999957
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.00369715 0 -0.399983
+dvel: -0.129609 0 -0.991565
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.0518434 0 -0.396626
+dvel: -0.0112123 0 -0.999937
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.00448492 0 -0.399975
+dvel: 0.798789 0 -0.601612
+corner size: 1 30.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.319515 0 -0.240645
+dvel: 0.816153 0 -0.577837
+corner size: 1 30.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.326461 0 -0.231135
+dvel: 0.82466 0 -0.565629
+corner size: 1 30.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.329864 0 -0.226252
+dvel: 0.795105 0 -0.606472
+corner size: 1 30.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.318042 0 -0.242589
+dvel: 0.776547 0 -0.630059
+corner size: 1 30.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.310619 0 -0.252024
+dvel: 0.834786 0 -0.550574
+corner size: 1 30.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333914 0 -0.22023
+dvel: 0.767848 0 -0.640632
+corner size: 1 34.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.307139 0 -0.256253
+dvel: 0.776404 0 -0.630236
+corner size: 1 34.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.310562 0 -0.252094
+dvel: 0.78538 0 -0.619014
+corner size: 1 34.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.314152 0 -0.247606
+dvel: 0.771482 0 -0.636251
+corner size: 1 34.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.308593 0 -0.254501
+dvel: 0.762531 0 -0.646952
+corner size: 1 34.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.305012 0 -0.258781
+dvel: 0.770263 0 -0.637727
+corner size: 1 34.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.308105 0 -0.255091
+dvel: 0.817148 0 -0.576428
+corner size: 1 34.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.326859 0 -0.230571
+dvel: 0.828122 0 -0.560547
+corner size: 1 34.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.331249 0 -0.224219
+dvel: 0.790063 0 -0.613026
+corner size: 1 34.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.316025 0 -0.24521
+dvel: 0.83855 0 -0.544825
+corner size: 1 34.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.33542 0 -0.21793
+dvel: 0.773013 0 -0.63439
+corner size: 1 38.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.309205 0 -0.253756
+dvel: 0.789528 0 -0.613715
+corner size: 1 38.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.315811 0 -0.245486
+dvel: 0.776505 0 -0.630111
+corner size: 1 38.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.310602 0 -0.252044
+dvel: 0.777324 0 -0.629101
+corner size: 1 38.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.31093 0 -0.25164
+dvel: 0.777919 0 -0.628364
+corner size: 1 38.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.311168 0 -0.251346
+dvel: 0.798053 0 -0.602587
+corner size: 1 38.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.319221 0 -0.241035
+dvel: 0.806169 0 -0.591685
+corner size: 1 38.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.322468 0 -0.236674
+dvel: 0.830741 0 -0.556659
+corner size: 1 38.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.332297 0 -0.222663
+dvel: 0.802809 0 -0.596236
+corner size: 1 38.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.321124 0 -0.238494
+dvel: 0.836698 0 -0.547665
+corner size: 1 38.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.334679 0 -0.219066
+dvel: 0.783669 0 -0.621179
+corner size: 1 42.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.313467 0 -0.248472
+dvel: 0.782748 0 -0.622338
+corner size: 1 42.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.313099 0 -0.248935
+dvel: 0.791166 0 -0.611602
+corner size: 1 42.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.316466 0 -0.244641
+dvel: 0.785251 0 -0.619177
+corner size: 1 42.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.314101 0 -0.247671
+dvel: 0.804687 0 -0.593699
+corner size: 1 42.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.321875 0 -0.23748
+dvel: 0.809853 0 -0.586633
+corner size: 1 42.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.323941 0 -0.234653
+dvel: 0.81988 0 -0.572535
+corner size: 1 42.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.327952 0 -0.229014
+dvel: 0.851133 0 -0.52495
+corner size: 1 42.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.340453 0 -0.20998
+dvel: 0.828483 0 -0.560015
+corner size: 1 42.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.331393 0 -0.224006
+dvel: 0.855606 0 -0.517628
+corner size: 1 42.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.342242 0 -0.207051
+dvel: 0.794292 0 -0.607536
+corner size: 1 46.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.317717 0 -0.243015
+dvel: 0.798713 0 -0.601712
+corner size: 1 46.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.319485 0 -0.240685
+dvel: 0.792144 0 -0.610334
+corner size: 1 46.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.316858 0 -0.244133
+dvel: 0.797906 0 -0.602782
+corner size: 1 46.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.319163 0 -0.241113
+dvel: 0.829587 0 -0.558378
+corner size: 1 46.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.331835 0 -0.223351
+dvel: 0.838589 0 -0.544765
+corner size: 1 46.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.335435 0 -0.217906
+dvel: 0.833917 0 -0.55189
+corner size: 1 46.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.333567 0 -0.220756
+dvel: 0.869652 0 -0.493666
+corner size: 1 46.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.347861 0 -0.197466
+dvel: 0.838866 0 -0.544338
+corner size: 1 46.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.335546 0 -0.217735
+dvel: 0.861501 0 -0.507756
+corner size: 1 46.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: 0.3446 0 -0.203102
+dvel: -0.809712 0 -0.586827
+corner size: 1 -29.5745 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.323885 0 -0.234731
+dvel: -0.776777 0 -0.629776
+corner size: 1 -29.5745 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.310711 0 -0.25191
+dvel: -0.777277 0 -0.629159
+corner size: 1 -29.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.310911 0 -0.251664
+dvel: -0.790094 0 -0.612986
+corner size: 1 -29.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.316037 0 -0.245195
+dvel: -0.793715 0 -0.60829
+corner size: 1 -29.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.317486 0 -0.243316
+dvel: -0.865012 0 -0.501751
+corner size: 1 -29.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.346005 0 -0.2007
+dvel: -0.187399 0 -0.982284
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.0749596 0 -0.392914
+dvel: -0.923051 0 -0.384677
+corner size: 1 -29.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.36922 0 -0.153871
+dvel: -0.886426 0 -0.46287
+corner size: 1 -29.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.35457 0 -0.185148
+dvel: -0.809349 0 -0.587328
+corner size: 1 -29.5745 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.32374 0 -0.234931
+dvel: -0.795892 0 -0.605439
+corner size: 1 -25.5745 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.318357 0 -0.242175
+dvel: -0.769373 0 -0.638799
+corner size: 1 -25.5745 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.307749 0 -0.25552
+dvel: -0.788297 0 -0.615295
+corner size: 1 -25.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.315319 0 -0.246118
+dvel: -0.778136 0 -0.628096
+corner size: 1 -25.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.311254 0 -0.251238
+dvel: -0.781988 0 -0.623293
+corner size: 1 -25.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.312795 0 -0.249317
+dvel: -0.852484 0 -0.522753
+corner size: 1 -25.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.340994 0 -0.209101
+dvel: -0.790211 0 -0.612835
+corner size: 1 -25.5745 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.316085 0 -0.245134
+dvel: -0.835868 0 -0.54893
+corner size: 1 -25.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.334347 0 -0.219572
+dvel: -0.838341 0 -0.545146
+corner size: 1 -25.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.335336 0 -0.218058
+dvel: -0.80503 0 -0.593234
+corner size: 1 -25.5745 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.322012 0 -0.237294
+dvel: -0.788469 0 -0.615074
+corner size: 1 -21.5745 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.315388 0 -0.24603
+dvel: -0.761413 0 -0.648267
+corner size: 1 -21.5745 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.304565 0 -0.259307
+dvel: -0.776778 0 -0.629774
+corner size: 1 -21.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.310711 0 -0.25191
+dvel: -0.768418 0 -0.639948
+corner size: 1 -21.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.307367 0 -0.255979
+dvel: -0.771159 0 -0.636643
+corner size: 1 -21.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.308464 0 -0.254657
+dvel: -0.852923 0 -0.522037
+corner size: 1 -21.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.341169 0 -0.208815
+dvel: -0.772029 0 -0.635587
+corner size: 1 -21.5745 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.308812 0 -0.254235
+dvel: -0.787033 0 -0.61691
+corner size: 1 -21.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.314813 0 -0.246764
+dvel: -0.829753 0 -0.55813
+corner size: 1 -21.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.331901 0 -0.223252
+dvel: -0.245741 0 -0.969335
+corner size: 2 -5.52784 10.2 -16.2543
+slowDownRadius: 1.6speedScale: 1dvel: -0.0982965 0 -0.387734
+dvel: -0.781361 0 -0.624079
+corner size: 1 -17.5745 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.312545 0 -0.249632
+dvel: -0.760402 0 -0.649453
+corner size: 1 -17.5745 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.304161 0 -0.259781
+dvel: -0.769398 0 -0.638769
+corner size: 1 -17.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.307759 0 -0.255508
+dvel: -0.764913 0 -0.644133
+corner size: 1 -17.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.305965 0 -0.257653
+dvel: -0.764806 0 -0.644261
+corner size: 1 -17.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.305922 0 -0.257704
+dvel: -0.799898 0 -0.600136
+corner size: 1 -17.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.319959 0 -0.240054
+dvel: -0.804929 0 -0.59337
+corner size: 1 -17.5745 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.321972 0 -0.237348
+dvel: -0.798573 0 -0.601898
+corner size: 1 -17.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.319429 0 -0.240759
+dvel: -0.822471 0 -0.568807
+corner size: 1 -17.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.328988 0 -0.227523
+dvel: -0.801699 0 -0.597728
+corner size: 1 -17.5745 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.32068 0 -0.239091
+dvel: -0.782054 0 -0.623211
+corner size: 1 -13.5745 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.312822 0 -0.249284
+dvel: -0.761718 0 -0.647909
+corner size: 1 -13.5745 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.304687 0 -0.259164
+dvel: -0.76245 0 -0.647048
+corner size: 1 -13.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.30498 0 -0.258819
+dvel: -0.762605 0 -0.646865
+corner size: 1 -13.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.305042 0 -0.258746
+dvel: -0.765179 0 -0.643817
+corner size: 1 -13.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.306072 0 -0.257527
+dvel: -0.77981 0 -0.626017
+corner size: 1 -13.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.311924 0 -0.250407
+dvel: -0.794098 0 -0.60779
+corner size: 1 -13.5745 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.317639 0 -0.243116
+dvel: -0.808847 0 -0.58802
+corner size: 1 -13.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.323539 0 -0.235208
+dvel: -0.790248 0 -0.612787
+corner size: 1 -13.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.316099 0 -0.245115
+dvel: -0.816216 0 -0.577747
+corner size: 1 -13.5745 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.326486 0 -0.231099
+dvel: -0.792304 0 -0.610127
+corner size: 1 -9.5745 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.316922 0 -0.244051
+dvel: -0.762278 0 -0.64725
+corner size: 1 -9.5745 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.304911 0 -0.2589
+dvel: -0.77072 0 -0.637174
+corner size: 1 -9.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.308288 0 -0.254869
+dvel: -0.777469 0 -0.628921
+corner size: 1 -9.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.310988 0 -0.251568
+dvel: -0.795764 0 -0.605607
+corner size: 1 -9.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.318305 0 -0.242243
+dvel: -0.809066 0 -0.587718
+corner size: 1 -9.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.323626 0 -0.235087
+dvel: -0.791571 0 -0.611077
+corner size: 1 -9.5745 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.316628 0 -0.244431
+dvel: -0.807986 0 -0.589201
+corner size: 1 -9.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.323195 0 -0.23568
+dvel: -0.832317 0 -0.554299
+corner size: 1 -9.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.332927 0 -0.22172
+dvel: -0.820095 0 -0.572227
+corner size: 1 -9.5745 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.328038 0 -0.228891
+dvel: -0.713388 0 -0.70077
+corner size: 2 -5.52784 10.2 50.4123
+slowDownRadius: 1.6speedScale: 1dvel: -0.285355 0 -0.280308
+dvel: -0.753271 0 -0.65771
+corner size: 2 -5.52784 10.2 50.4123
+slowDownRadius: 1.6speedScale: 1dvel: -0.301308 0 -0.263084
+dvel: -0.773572 0 -0.633708
+corner size: 1 -5.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.309429 0 -0.253483
+dvel: -0.771942 0 -0.635693
+corner size: 1 -5.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.308777 0 -0.254277
+dvel: -0.814352 0 -0.580371
+corner size: 1 -5.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.325741 0 -0.232149
+dvel: -0.811403 0 -0.584486
+corner size: 1 -5.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.324561 0 -0.233795
+dvel: -0.826682 0 -0.562669
+corner size: 1 -5.5745 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.330673 0 -0.225068
+dvel: -0.828543 0 -0.559926
+corner size: 1 -5.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.331417 0 -0.22397
+dvel: -0.834941 0 -0.550339
+corner size: 1 -5.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333977 0 -0.220136
+dvel: -0.821697 0 -0.569924
+corner size: 1 -5.5745 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.328679 0 -0.22797
+dvel: -0.783094 0 -0.621903
+corner size: 1 -1.5745 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.313238 0 -0.248761
+dvel: -0.765866 0 -0.643
+corner size: 1 -1.5745 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.306347 0 -0.2572
+dvel: -0.776986 0 -0.629518
+corner size: 1 -1.5745 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.310794 0 -0.251807
+dvel: -0.771594 0 -0.636115
+corner size: 1 -1.5745 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.308638 0 -0.254446
+dvel: -0.83232 0 -0.554295
+corner size: 1 -1.5745 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.332928 0 -0.221718
+dvel: -0.833269 0 -0.552868
+corner size: 1 -1.5745 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333307 0 -0.221147
+dvel: -0.834785 0 -0.550577
+corner size: 1 -1.5745 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333914 0 -0.220231
+dvel: -0.825494 0 -0.564411
+corner size: 1 -1.5745 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.330198 0 -0.225764
+dvel: -0.83494 0 -0.55034
+corner size: 1 -1.5745 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333976 0 -0.220136
+dvel: -0.823577 0 -0.567204
+corner size: 1 -1.5745 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.329431 0 -0.226882
+dvel: -0.787548 0 -0.616253
+corner size: 1 2.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.315019 0 -0.246501
+dvel: -0.769569 0 -0.638564
+corner size: 1 2.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.307828 0 -0.255426
+dvel: -0.806986 0 -0.590571
+corner size: 1 2.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.322794 0 -0.236228
+dvel: -0.830932 0 -0.556374
+corner size: 1 2.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.332373 0 -0.222549
+dvel: -0.83517 0 -0.549992
+corner size: 1 2.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.334068 0 -0.219997
+dvel: -0.833269 0 -0.552868
+corner size: 1 2.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333308 0 -0.221147
+dvel: -0.828751 0 -0.559618
+corner size: 1 2.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.3315 0 -0.223847
+dvel: -0.834978 0 -0.550283
+corner size: 1 2.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333991 0 -0.220113
+dvel: -0.834935 0 -0.550349
+corner size: 1 2.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333974 0 -0.22014
+dvel: -0.825404 0 -0.564542
+corner size: 1 2.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.330162 0 -0.225817
+dvel: -0.789691 0 -0.613505
+corner size: 1 6.4255 10.2 55.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.315876 0 -0.245402
+dvel: -0.797918 0 -0.602767
+corner size: 1 6.4255 10.2 51.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.319167 0 -0.241107
+dvel: -0.805411 0 -0.592717
+corner size: 1 6.4255 10.2 47.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.322164 0 -0.237087
+dvel: -0.82714 0 -0.561996
+corner size: 1 6.4255 10.2 43.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.330856 0 -0.224798
+dvel: -0.833185 0 -0.552995
+corner size: 1 6.4255 10.2 39.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333274 0 -0.221198
+dvel: -0.833269 0 -0.552867
+corner size: 1 6.4255 10.2 35.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333308 0 -0.221147
+dvel: -0.828894 0 -0.559405
+corner size: 1 6.4255 10.2 31.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.331558 0 -0.223762
+dvel: -0.83484 0 -0.550493
+corner size: 1 6.4255 10.2 27.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333936 0 -0.220197
+dvel: -0.83492 0 -0.550371
+corner size: 1 6.4255 10.2 23.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.333968 0 -0.220149
+dvel: -0.827341 0 -0.5617
+corner size: 1 6.4255 10.2 19.079
+slowDownRadius: 1.6speedScale: 1dvel: -0.330936 0 -0.22468
+nvel: 0.267232 0 0.0800396
+nvel: 0.267232 0 0.0800396
+nvel: 0.332317 0 -0.222633
+nvel: 0.332317 0 -0.222633
+nvel: 0.332879 0 -0.221792
+nvel: 0.332879 0 -0.221792
+nvel: 0.353538 0 -0.157796
+nvel: 0.353538 0 -0.157796
+nvel: 0.330324 0 -0.193355
+nvel: 0.330324 0 -0.193355
+nvel: 0.300247 0 -0.215161
+nvel: 0.300247 0 -0.215161
+nvel: 0.327702 0 -0.203373
+nvel: 0.327702 0 -0.203373
+nvel: 0.277484 0 -0.167836
+nvel: 0.277484 0 -0.167836
+nvel: 0.330263 0 -0.177026
+nvel: 0.330263 0 -0.177026
+nvel: 0.102046 0 -0.386764
+nvel: 0.102046 0 -0.386764
+nvel: 0.327183 0 0.219846
+nvel: 0.327183 0 0.219846
+nvel: 0.314543 0 -0.24271
+nvel: 0.314543 0 -0.24271
+nvel: 0.333045 0 -0.221543
+nvel: 0.333045 0 -0.221543
+nvel: 0.301679 0 -0.204583
+nvel: 0.301679 0 -0.204583
+nvel: 0.382062 0 -0.0604536
+nvel: 0.382062 0 -0.0604536
+nvel: 0.297813 0 -0.15739
+nvel: 0.297813 0 -0.15739
+nvel: 0.371664 0 -0.0369969
+nvel: 0.371664 0 -0.0369969
+nvel: 0.214115 0 -0.139813
+nvel: 0.214115 0 -0.139813
+nvel: 0.330275 0 -0.178509
+nvel: 0.330275 0 -0.178509
+nvel: 0.333893 0 -0.220263
+nvel: 0.333893 0 -0.220263
+nvel: 0.279684 0 0.222826
+nvel: 0.279684 0 0.222826
+nvel: 0.206968 0 -0.049638
+nvel: 0.206968 0 -0.049638
+nvel: 0.270888 0 0.106398
+nvel: 0.270888 0 0.106398
+nvel: 0.318743 0 -0.106356
+nvel: 0.318743 0 -0.106356
+nvel: 0.315403 0 -0.0523884
+nvel: 0.315403 0 -0.0523884
+nvel: 0.226569 0 -0.128877
+nvel: 0.226569 0 -0.128877
+nvel: 0.00565797 0 -0.39996
+nvel: 0.00565797 0 -0.39996
+nvel: 0.296477 0 -0.176665
+nvel: 0.296477 0 -0.176665
+nvel: 0.27109 0 -0.141847
+nvel: 0.27109 0 -0.141847
+nvel: 0.333934 0 -0.2202
+nvel: 0.333934 0 -0.2202
+nvel: 0.276822 0 0.225777
+nvel: 0.276822 0 0.225777
+nvel: 0.253224 0 0.17694
+nvel: 0.253224 0 0.17694
+nvel: 0.20076 0 0.194027
+nvel: 0.20076 0 0.194027
+nvel: 0.173324 0 0.0790046
+nvel: 0.173324 0 0.0790046
+nvel: 0.274843 0 -0.249957
+nvel: 0.274843 0 -0.249957
+nvel: 0.273883 0 -0.291527
+nvel: 0.273883 0 -0.291527
+nvel: 0.328983 0 -0.0970093
+nvel: 0.328983 0 -0.0970093
+nvel: 0.272372 0 -0.116439
+nvel: 0.272372 0 -0.116439
+nvel: 0.264783 0 -0.0838299
+nvel: 0.264783 0 -0.0838299
+nvel: 0.333889 0 -0.220269
+nvel: 0.333889 0 -0.220269
+nvel: 0.304917 0 0.143167
+nvel: 0.304917 0 0.143167
+nvel: 0.216471 0 0.193366
+nvel: 0.216471 0 0.193366
+nvel: 0.141214 0 -0.126337
+nvel: 0.141214 0 -0.126337
+nvel: 0.0933203 0 -0.0823212
+nvel: 0.0933203 0 -0.0823212
+nvel: 0.19587 0 -0.0680282
+nvel: 0.19587 0 -0.0680282
+nvel: 0.270602 0 -0.0767436
+nvel: 0.270602 0 -0.0767436
+nvel: 0.329521 0 -0.0808818
+nvel: 0.329521 0 -0.0808818
+nvel: 0.375925 0 0.0296035
+nvel: 0.375925 0 0.0296035
+nvel: 0.338688 0 -0.106931
+nvel: 0.338688 0 -0.106931
+nvel: 0.333882 0 -0.220278
+nvel: 0.333882 0 -0.220278
+nvel: 0.0542324 0 -0.396307
+nvel: 0.0542324 0 -0.396307
+nvel: 0.0508991 0 -0.396748
+nvel: 0.0508991 0 -0.396748
+nvel: 0.236391 0 0.0798453
+nvel: 0.236391 0 0.0798453
+nvel: -0.0659749 0 -0.244527
+nvel: -0.0659749 0 -0.244527
+nvel: 0.219724 0 0.170083
+nvel: 0.219724 0 0.170083
+nvel: 0.0573957 0 0.106448
+nvel: 0.0573957 0 0.106448
+nvel: 0.160536 0 -0.142798
+nvel: 0.160536 0 -0.142798
+nvel: 0.204168 0 0.00897614
+nvel: 0.204168 0 0.00897614
+nvel: 0.316263 0 0.145673
+nvel: 0.316263 0 0.145673
+nvel: 0.333914 0 -0.22023
+nvel: 0.333914 0 -0.22023
+nvel: 0.311021 0 0.135097
+nvel: 0.311021 0 0.135097
+nvel: 0.269227 0 0.165917
+nvel: 0.269227 0 0.165917
+nvel: 0.240603 0 0.184554
+nvel: 0.240603 0 0.184554
+nvel: 0.346773 0 0.186759
+nvel: 0.346773 0 0.186759
+nvel: 0.329255 0 0.200139
+nvel: 0.329255 0 0.200139
+nvel: 0.209078 0 0.311596
+nvel: 0.209078 0 0.311596
+nvel: 0.0464766 0 0.22433
+nvel: 0.0464766 0 0.22433
+nvel: 0.190705 0 0.095346
+nvel: 0.190705 0 0.095346
+nvel: 0.258309 0 0.0738663
+nvel: 0.258309 0 0.0738663
+nvel: 0.33542 0 -0.21793
+nvel: 0.33542 0 -0.21793
+nvel: 0.326584 0 0.0943301
+nvel: 0.326584 0 0.0943301
+nvel: 0.218071 0 0.163248
+nvel: 0.218071 0 0.163248
+nvel: 0.32301 0 0.168308
+nvel: 0.32301 0 0.168308
+nvel: 0.359576 0 0.175228
+nvel: 0.359576 0 0.175228
+nvel: 0.352784 0 0.188529
+nvel: 0.352784 0 0.188529
+nvel: 0.157718 0 0.254779
+nvel: 0.157718 0 0.254779
+nvel: 0.228348 0 0.315755
+nvel: 0.228348 0 0.315755
+nvel: 0.127241 0 0.0619034
+nvel: 0.127241 0 0.0619034
+nvel: 0.141683 0 0.224831
+nvel: 0.141683 0 0.224831
+nvel: 0.267341 0 0.0180359
+nvel: 0.267341 0 0.0180359
+nvel: 0.325682 0 0.103598
+nvel: 0.325682 0 0.103598
+nvel: 0.349328 0 0.147645
+nvel: 0.349328 0 0.147645
+nvel: 0.268546 0 0.175563
+nvel: 0.268546 0 0.175563
+nvel: 0.36257 0 0.168947
+nvel: 0.36257 0 0.168947
+nvel: 0.297061 0 -0.0605781
+nvel: 0.297061 0 -0.0605781
+nvel: 0.16235 0 0.263393
+nvel: 0.16235 0 0.263393
+nvel: 0.219018 0 0.298652
+nvel: 0.219018 0 0.298652
+nvel: 0.0920824 0 0.194943
+nvel: 0.0920824 0 0.194943
+nvel: 0.206603 0 0.080284
+nvel: 0.206603 0 0.080284
+nvel: 0.342242 0 -0.207051
+nvel: 0.342242 0 -0.207051
+nvel: 0.325588 0 0.111146
+nvel: 0.325588 0 0.111146
+nvel: 0.304257 0 0.161968
+nvel: 0.304257 0 0.161968
+nvel: 0.264392 0 0.171473
+nvel: 0.264392 0 0.171473
+nvel: 0.395316 0 -0.0610334
+nvel: 0.395316 0 -0.0610334
+nvel: 0.325693 0 -0.129115
+nvel: 0.325693 0 -0.129115
+nvel: 0.11562 0 0.254124
+nvel: 0.11562 0 0.254124
+nvel: 0.196276 0 0.327051
+nvel: 0.196276 0 0.327051
+nvel: 0.0825206 0 0.219329
+nvel: 0.0825206 0 0.219329
+nvel: 0.169236 0 0.11342
+nvel: 0.169236 0 0.11342
+nvel: 0.3446 0 -0.203102
+nvel: 0.3446 0 -0.203102
+nvel: -0.323885 0 -0.234731
+nvel: -0.323885 0 -0.234731
+nvel: -0.287581 0 0.179585
+nvel: -0.287581 0 0.179585
+nvel: -0.323123 0 0.198035
+nvel: -0.323123 0 0.198035
+nvel: -0.220671 0 0.209489
+nvel: -0.220671 0 0.209489
+nvel: -0.125554 0 0.192956
+nvel: -0.125554 0 0.192956
+nvel: -0.219769 0 0.0302456
+nvel: -0.219769 0 0.0302456
+nvel: -0.0766125 0 0.212082
+nvel: -0.0766125 0 0.212082
+nvel: -0.117681 0 0.024342
+nvel: -0.117681 0 0.024342
+nvel: -0.35457 0 -0.185148
+nvel: -0.35457 0 -0.185148
+nvel: -0.168256 0 0.124245
+nvel: -0.168256 0 0.124245
+nvel: -0.311945 0 0.190414
+nvel: -0.311945 0 0.190414
+nvel: -0.307878 0 0.204148
+nvel: -0.307878 0 0.204148
+nvel: -0.300174 0 0.2107
+nvel: -0.300174 0 0.2107
+nvel: -0.221831 0 0.203329
+nvel: -0.221831 0 0.203329
+nvel: -0.252466 0 0.119282
+nvel: -0.252466 0 0.119282
+nvel: 0.115476 0 0.229552
+nvel: 0.115476 0 0.229552
+nvel: -0.177911 0 0.182479
+nvel: -0.177911 0 0.182479
+nvel: -0.0944756 0 0.275629
+nvel: -0.0944756 0 0.275629
+nvel: -0.0752128 0 0.149589
+nvel: -0.0752128 0 0.149589
+nvel: -0.24616 0 0.0953319
+nvel: -0.24616 0 0.0953319
+nvel: -0.322128 0 0.12771
+nvel: -0.322128 0 0.12771
+nvel: -0.304289 0 0.244177
+nvel: -0.304289 0 0.244177
+nvel: -0.289924 0 0.215898
+nvel: -0.289924 0 0.215898
+nvel: -0.227146 0 0.195008
+nvel: -0.227146 0 0.195008
+nvel: -0.286395 0 0.107053
+nvel: -0.286395 0 0.107053
+nvel: -0.0147669 0 -0.0432832
+nvel: -0.0147669 0 -0.0432832
+nvel: -0.207773 0 0.317319
+nvel: -0.207773 0 0.317319
+nvel: -0.157906 0 0.314683
+nvel: -0.157906 0 0.314683
+nvel: -0.270629 0 0.0203308
+nvel: -0.270629 0 0.0203308
+nvel: -0.191852 0 -0.0253401
+nvel: -0.191852 0 -0.0253401
+nvel: -0.348213 0 0.118646
+nvel: -0.348213 0 0.118646
+nvel: -0.305664 0 0.218428
+nvel: -0.305664 0 0.218428
+nvel: -0.249908 0 0.222159
+nvel: -0.249908 0 0.222159
+nvel: -0.267947 0 0.234325
+nvel: -0.267947 0 0.234325
+nvel: -0.255864 0 0.256781
+nvel: -0.255864 0 0.256781
+nvel: -0.25608 0 0.202604
+nvel: -0.25608 0 0.202604
+nvel: -0.179874 0 0.254015
+nvel: -0.179874 0 0.254015
+nvel: -0.141199 0 0.279521
+nvel: -0.141199 0 0.279521
+nvel: -0.268345 0 0.017546
+nvel: -0.268345 0 0.017546
+nvel: -0.261643 0 0.108468
+nvel: -0.261643 0 0.108468
+nvel: -0.348639 0 0.141637
+nvel: -0.348639 0 0.141637
+nvel: -0.284915 0 0.214432
+nvel: -0.284915 0 0.214432
+nvel: -0.302321 0 0.220675
+nvel: -0.302321 0 0.220675
+nvel: -0.267699 0 0.233442
+nvel: -0.267699 0 0.233442
+nvel: -0.303403 0 0.260666
+nvel: -0.303403 0 0.260666
+nvel: -0.293589 0 0.223809
+nvel: -0.293589 0 0.223809
+nvel: -0.199751 0 0.248231
+nvel: -0.199751 0 0.248231
+nvel: -0.117603 0 0.0929481
+nvel: -0.117603 0 0.0929481
+nvel: -0.352633 0 0.0598901
+nvel: -0.352633 0 0.0598901
+nvel: -0.265039 0 -0.0451603
+nvel: -0.265039 0 -0.0451603
+nvel: -0.318882 0 0.0774886
+nvel: -0.318882 0 0.0774886
+nvel: -0.277525 0 0.211031
+nvel: -0.277525 0 0.211031
+nvel: -0.275938 0 0.219811
+nvel: -0.275938 0 0.219811
+nvel: -0.274641 0 0.233394
+nvel: -0.274641 0 0.233394
+nvel: -0.00052555 0 0.222263
+nvel: -0.00052555 0 0.222263
+nvel: -0.212608 0 0.0733054
+nvel: -0.212608 0 0.0733054
+nvel: -0.268106 0 0.165493
+nvel: -0.268106 0 0.165493
+nvel: -0.322325 0 -0.229641
+nvel: -0.322325 0 -0.229641
+nvel: -0.314813 0 -0.14762
+nvel: -0.314813 0 -0.14762
+nvel: -0.3246 0 -0.175035
+nvel: -0.3246 0 -0.175035
+nvel: -0.318538 0 0.116765
+nvel: -0.318538 0 0.116765
+nvel: -0.298174 0 0.200126
+nvel: -0.298174 0 0.200126
+nvel: -0.331536 0 0.223795
+nvel: -0.331536 0 0.223795
+nvel: -0.321146 0 0.238464
+nvel: -0.321146 0 0.238464
+nvel: -0.262015 0 -0.138999
+nvel: -0.262015 0 -0.138999
+nvel: -0.233978 0 -0.0222794
+nvel: -0.233978 0 -0.0222794
+nvel: -0.330673 0 -0.225068
+nvel: -0.330673 0 -0.225068
+nvel: -0.352733 0 -0.14111
+nvel: -0.352733 0 -0.14111
+nvel: -0.333977 0 -0.220136
+nvel: -0.333977 0 -0.220136
+nvel: -0.325976 0 -0.179954
+nvel: -0.325976 0 -0.179954
+nvel: -0.344663 0 0.112479
+nvel: -0.344663 0 0.112479
+nvel: -0.279114 0 0.198699
+nvel: -0.279114 0 0.198699
+nvel: -0.278273 0 0.207127
+nvel: -0.278273 0 0.207127
+nvel: -0.150411 0 0.211204
+nvel: -0.150411 0 0.211204
+nvel: -0.337852 0 -0.210041
+nvel: -0.337852 0 -0.210041
+nvel: -0.333307 0 -0.221147
+nvel: -0.333307 0 -0.221147
+nvel: -0.309292 0 -0.208134
+nvel: -0.309292 0 -0.208134
+nvel: -0.359316 0 -0.106313
+nvel: -0.359316 0 -0.106313
+nvel: -0.333976 0 -0.220136
+nvel: -0.333976 0 -0.220136
+nvel: -0.327203 0 -0.183304
+nvel: -0.327203 0 -0.183304
+nvel: -0.27923 0 0.124676
+nvel: -0.27923 0 0.124676
+nvel: -0.253575 0 0.187389
+nvel: -0.253575 0 0.187389
+nvel: -0.121589 0 0.122043
+nvel: -0.121589 0 0.122043
+nvel: -0.332373 0 -0.222549
+nvel: -0.332373 0 -0.222549
+nvel: -0.306845 0 -0.225781
+nvel: -0.306845 0 -0.225781
+nvel: -0.333308 0 -0.221147
+nvel: -0.333308 0 -0.221147
+nvel: -0.330217 0 -0.201835
+nvel: -0.330217 0 -0.201835
+nvel: -0.333991 0 -0.220113
+nvel: -0.333991 0 -0.220113
+nvel: -0.333974 0 -0.220139
+nvel: -0.333974 0 -0.220139
+nvel: -0.328237 0 -0.185502
+nvel: -0.328237 0 -0.185502
+nvel: -0.318309 0 0.0724285
+nvel: -0.318309 0 0.0724285
+nvel: -0.185152 0 0.105975
+nvel: -0.185152 0 0.105975
+nvel: -0.33369 0 -0.148849
+nvel: -0.33369 0 -0.148849
+nvel: -0.332695 0 -0.209778
+nvel: -0.332695 0 -0.209778
+nvel: -0.333274 0 -0.221198
+nvel: -0.333274 0 -0.221198
+nvel: -0.333308 0 -0.221147
+nvel: -0.333308 0 -0.221147
+nvel: -0.331558 0 -0.223762
+nvel: -0.331558 0 -0.223762
+nvel: -0.333936 0 -0.220197
+nvel: -0.333936 0 -0.220197
+nvel: -0.333968 0 -0.220149
+nvel: -0.333968 0 -0.220149
+nvel: -0.32922 0 -0.186951
+nvel: -0.32922 0 -0.186951

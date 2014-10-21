@@ -33,6 +33,8 @@ extern "C"
 
 	extern EXPORT_API void SetDensityThreshold(float thresh);
 
+	extern EXPORT_API void SetAgentCorridor(int aid, int cornerNum, float* corners);
+
 	bool Init(int maxAgents, float renderAgentRadius, float gridSize, int vn, float* verts, int fn, int* inds)
 	{
 		return init(maxAgents, renderAgentRadius, gridSize, vn, verts, fn, inds);
@@ -76,6 +78,11 @@ extern "C"
 	void SetDensityThreshold(float thresh)
 	{
 		setDensityThreshold(thresh);
+	}
+
+	void SetAgentCorridor(int aid, int cornerNum, float* corners)
+	{
+		setAgentCorridor(aid, cornerNum, corners);
 	}
 }
 #endif
