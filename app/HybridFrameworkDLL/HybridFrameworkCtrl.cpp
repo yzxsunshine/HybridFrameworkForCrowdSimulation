@@ -379,9 +379,10 @@ int HybridFrameworkCtrl::getActiveAgents(HmAgent** agents, const int maxAgents)
 
 #include <fstream>
 
-void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, float* positions, float* velocities)
+void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, float* positions, float* velocities, float* rvoTime, float* GCTime, float* totalTime)
 {
 	TimeVal startTime = getPerfTime();
+	TimeVal totalStartTime = startTime;
 	m_rvosim->agents_.clear();
 	m_rvosim->obstacles_.clear();
 	
@@ -454,6 +455,7 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 	}
 	endTime = getPerfTime();
 	std::printf("Fluid Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	(*GCTime) = getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f;
 	startTime = getPerfTime();
 	for (unsigned int i = 0; i<m_densegroups.size(); i++)
 	{
@@ -480,6 +482,7 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 	m_rvosim->doStep();
 	endTime = getPerfTime();
 	std::printf("RVO Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	(*rvoTime) = getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f;
 	startTime = getPerfTime();
 
 	// Integrate. and get new position
@@ -494,32 +497,60 @@ void HybridFrameworkCtrl::update(const float dt, int agentNum, int* agentIds, fl
 
 		if (ag->state != DT_CROWDAGENT_STATE_WALKING)
 			continue;
+		float pos[3];
+		memcpy(pos, ag->npos, 3 * sizeof(float));
 		integrate(ag, dt);
 		std::cout << "nvel:" << " " << ag->nvel[0] << " " << ag->nvel[1] << " " << ag->nvel[2] << std::endl;
 		ag->corridor.UpdateDir(ag->npos, float(ag->radius_));
 		int tileID = -1;
 		int faceID = -1;
 		int gridID = -1;
+		
+		float nearest[3];
+		bool res = GetNearestFace(ag->npos, tileID, gridID, faceID, nearest);
+		if (res)
+		{
+			ag->curGrid = gridID;
+			ag->curFace = faceID;
+			ag->curTile = tileID;
+			vecCopy(ag->npos, nearest);
+			
+		}
+		else
+		{
+			// the agent is pushed out side navigation mesh
+			float pdir[3];
+			ag->corridor.GetSteerDir(pos, pdir);
+			Vector2 preferDir(pdir[0], pdir[2]);	// get prefered direction
+			Vector2 crossDir(-ag->velocity_.y(), ag->velocity_.x());
+			float dotVal = preferDir.dot(crossDir);
+			if (dotVal < 0) {
+				crossDir = -crossDir;
+				dotVal = -dotVal;
+			}
+			ag->nvel[0] = float(crossDir.x());
+			ag->nvel[1] = float(ag->dvel[1]);
+			ag->nvel[2] = float(crossDir.y());
+			integrate(ag, dt);
+			std::cout << "nvel:" << " " << ag->nvel[0] << " " << ag->nvel[1] << " " << ag->nvel[2] << std::endl;
+			ag->corridor.UpdateDir(ag->npos, float(ag->radius_));
+			res = GetNearestFace(ag->npos, tileID, gridID, faceID, nearest);
+		}
 		velocities[i * 3] = ag->nvel[0];
 		velocities[i * 3 + 1] = ag->nvel[1];
 		velocities[i * 3 + 2] = ag->nvel[2];
 		std::cout << "nvel:" << " " << ag->nvel[0] << " " << ag->nvel[1] << " " << ag->nvel[2] << std::endl;
 		//ag->corridor.UpdateDir(ag->npos, float(ag->radius_));	// so here, we should refresh the navigation part every N frames
-		float nearest[3];
-		bool res = GetNearestFace(ag->npos, tileID, gridID, faceID, nearest);
-		ag->curGrid = gridID;
-		ag->curFace = faceID;
-		ag->curTile = tileID;
-		vecCopy(ag->npos, nearest);
-
+		
 		positions[i * 3] = ag->npos[0];
 		positions[i * 3 + 1] = ag->npos[1];
 		positions[i * 3 + 2] = ag->npos[2];
-
 	}
 	//ofs.close();
 	endTime = getPerfTime();
 	std::printf("Ajust Position Time: %f\n", getPerfDeltaTimeUsec(startTime, endTime) / 1000.0f);
+	TimeVal totalEndTime = endTime;
+	(*totalTime) = getPerfDeltaTimeUsec(totalStartTime, totalEndTime) / 1000.0f;
 }
 
 void HybridFrameworkCtrl::MergeGrid()
@@ -867,6 +898,8 @@ void HybridFrameworkCtrl::SetAgentCorridor(int aid, int cornerNum, float* corner
 bool HybridFrameworkCtrl::GetNearestFace(vcg::Point3f& pos, int& tileID, int& gridID, int& faceID, vcg::Point3f& nearestPos)
 {
 	Tile* tile = m_tileCtrl->GetTile(pos);
+	if (tile == NULL)
+		return false;
 	tileID = tile->m_tileID;
 	faceID = -1;
 	return tile->GetNearestFace(pos, gridID, faceID, m_nav, m_tileCtrl->m_grids, nearestPos);
@@ -877,7 +910,9 @@ bool HybridFrameworkCtrl::GetNearestFace(const float* pos, int& tileID, int& gri
 	vcg::Point3f p(pos[0], pos[1], pos[2]);
 	vcg::Point3f n;
 	bool res = GetNearestFace(p, tileID, gridID, faceID, n);
+	if (!res)
+		return false;
 	nearestPos[0] = n.X();	nearestPos[1] = n.Y();	nearestPos[2] = n.Z();
-	return res;
+	return true;
 }
 

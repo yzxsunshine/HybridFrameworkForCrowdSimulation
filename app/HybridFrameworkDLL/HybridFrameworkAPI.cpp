@@ -32,9 +32,9 @@ void removeAgent(int idx)
 /// Updates the steering and positions of all agents.
 ///  @param[in]		dt		The time, in seconds, to update the simulation. [Limit: > 0]
 ///  @param[out]	debug	A debug object to load with debug information. [Opt]
-void update(float dt, int agentNum, int* agentIds, float* positions, float* velocities)
+void update(float dt, int agentNum, int* agentIds, float* positions, float* velocities, float* rvoTime, float* GCTime, float* totalTime)
 {
-	return ctrl.update(dt, agentNum, agentIds, positions, velocities);
+	return ctrl.update(dt, agentNum, agentIds, positions, velocities, rvoTime, GCTime, totalTime);
 }
 
 void clear() 

@@ -27,7 +27,7 @@ extern "C"
 	/// Updates the steering and positions of all agents.
 	///  @param[in]		dt		The time, in seconds, to update the simulation. [Limit: > 0]
 	///  @param[out]	debug	A debug object to load with debug information. [Opt]
-	extern EXPORT_API void Update(float dt, int agentNum, int* agentIds, float* positions, float* velocities);
+	extern EXPORT_API void Update(float dt, int agentNum, int* agentIds, float* positions, float* velocities, float* rvoTime, float* GCTime, float* totalTime);
 
 	extern EXPORT_API void Clear();
 
@@ -65,9 +65,9 @@ extern "C"
 	/// Updates the steering and positions of all agents.
 	///  @param[in]		dt		The time, in seconds, to update the simulation. [Limit: > 0]
 	///  @param[out]	debug	A debug object to load with debug information. [Opt]
-	void Update(float dt, int agentNum, int* agentIds, float* positions, float* velocities)
+	void Update(float dt, int agentNum, int* agentIds, float* positions, float* velocities, float* rvoTime, float* GCTime, float* totalTime)
 	{
-		return update(dt, agentNum, agentIds, positions, velocities);
+		return update(dt, agentNum, agentIds, positions, velocities, rvoTime, GCTime, totalTime);
 	}
 
 	void Clear()

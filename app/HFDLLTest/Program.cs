@@ -33,7 +33,7 @@ namespace HFDLLTest
 	    ///  @param[in]		dt		The time, in seconds, to update the simulation. [Limit: > 0]
 	    ///  @param[out]	debug	A debug object to load with debug information. [Opt]
         [DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void Update(float dt, int agentNum, int[] agentIds, float[] positions, float[] velocities);
+        private static extern void Update(float dt, int agentNum, int[] agentIds, float[] positions, float[] velocities, ref float rvoTime, ref float GCTime, ref float totalTime);
 
         [DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
 	    private static extern void Clear();
@@ -163,9 +163,12 @@ namespace HFDLLTest
                 vels[i * 3 + 2] = (float)Convert.ToDouble(line);
             }
             sr3.Close();
+            float rvoTime = 0;
+            float GCTime = 0;
+            float totalTime = 0;
             while (count < 500)
-            { 
-                Update(dt, agentNum, ids, poss, vels);
+            {
+                Update(dt, agentNum, ids, poss, vels, ref rvoTime, ref GCTime, ref totalTime);
                 count++;
             }
             Clear();

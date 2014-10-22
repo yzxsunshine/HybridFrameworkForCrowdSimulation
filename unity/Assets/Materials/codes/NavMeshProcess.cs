@@ -23,7 +23,7 @@ public class NavMeshProcess : MonoBehaviour {
 	private static extern void RemoveAgent(int idx);
 
 	[DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
-	private static extern void Update(float dt, int agentNum, int[] agentIds, float[] positions, float[] velocities);
+	private static extern void Update(float dt, int agentNum, int[] agentIds, float[] positions, float[] velocities, ref float rvoTime, ref float GCTime, ref float totalTime);
 	
 	[DllImport("HybridFrameworkDLL", CallingConvention = CallingConvention.Cdecl)]
 	private static extern void Clear();
@@ -204,7 +204,10 @@ public class NavMeshProcess : MonoBehaviour {
 				}
 				sw.Close();
 			}
-			Update(dt, agentNum, agentIds, pos, vel);
+			float rvoTime = 0;
+			float GCTime = 0;
+			float totalTime = 0;
+			Update(dt, agentNum, agentIds, pos, vel, ref rvoTime, ref GCTime, ref totalTime);
 			for(int i=0; i<agentNum; i++) {
 				if(agents[i].GetComponent<LocomotionCtrlScript>().inPosition == true) {
 					continue;
@@ -219,8 +222,8 @@ public class NavMeshProcess : MonoBehaviour {
 				float theta = Vector3.Angle(zaxis, velocity);
 				//theta = theta * 180 / (float)Math.PI;
 				//agents[i].transform.RotateAround(agents[i].transform.position, Vector3.up, theta);
-				agents[i].transform.rotation = Quaternion.AngleAxis(-theta, Vector3.up);
-				//agents[i].transform.forward = velocity;
+				//agents[i].transform.rotation = Quaternion.AngleAxis(-theta, Vector3.up);
+				agents[i].transform.forward = velocity;
 				//agents[i].GetComponent<NavMeshAgent>().enabled = true;
 			}
 			//if(counter % 30 == 0) {	// reset path every 200 frames
