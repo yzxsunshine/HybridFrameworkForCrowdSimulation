@@ -44,8 +44,8 @@ public class NavMeshProcess : MonoBehaviour {
 		agents = new List<GameObject>();
 		counter = 0;
 		// read scene data
-		Vector3 boxMin = renderer.bounds.min;
-		Vector3 boxMax = renderer.bounds.max;
+		Vector3 boxMin = GetComponent<Renderer>().bounds.min;
+		Vector3 boxMax = GetComponent<Renderer>().bounds.max;
 		// read navigation mesh
 		NavMeshTriangulation navMeshTris = NavMesh.CalculateTriangulation();
 

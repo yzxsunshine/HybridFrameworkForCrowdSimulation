@@ -8,5 +8,5 @@ function Start () {
 function Update () {
 	var XScale = 10;
 	var YScale = 10;
-	transform.renderer.material.mainTextureScale = new Vector2(XScale , YScale );
+	transform.GetComponent.<Renderer>().material.mainTextureScale = new Vector2(XScale , YScale );
 }

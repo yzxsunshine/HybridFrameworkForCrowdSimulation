@@ -8,7 +8,7 @@ private var lastMouse = Vector3(255, 255, 255); //kind of in the middle of the s
 private var totalRun : float  = 1.0;
 
 function Start (){
-        Screen.showCursor = false;
+        Cursor.visible = false;
 }
  
 function Update () {
